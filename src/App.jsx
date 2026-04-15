@@ -1,12 +1,13 @@
-import { SignInButton, UserButton, useUser } from "@clerk/react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login/Login";
 
 function App() {
-  const { isSignedIn } = useUser();
-
   return (
-    <div className="h-screen flex items-center justify-center">
-      {isSignedIn ? <UserButton /> : <SignInButton />}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

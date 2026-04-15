@@ -1,19 +1,20 @@
 import { useState } from "react";
-import { useSignIn, SignInButton } from "@clerk/react";
+import { useSignUp } from "@clerk/react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react";
+
 import loginImg from "../../assets/images/login.jpg";
 import logo from "../../assets/images/Logo.png";
-import { Link } from "react-router-dom";
 
-export default function Login() {
-  const { signIn, isLoaded } = useSignIn();
+export default function Signup() {
+  const { signUp, isLoaded } = useSignUp();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    identifier: "",
+    email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -26,18 +27,28 @@ export default function Login() {
 
     setErrorMsg("");
 
+    if (form.password !== form.confirmPassword) {
+      setErrorMsg("Passwords do not match");
+      return;
+    }
+
     try {
-      const result = await signIn.create({
-        identifier: form.identifier,
+      // Create account
+      await signUp.create({
+        emailAddress: form.email,
         password: form.password,
       });
 
-      if (result.status === "complete") {
-        toast.success("Welcome back 👋");
-        navigate("/");
-      }
+      // Send verification code
+      await signUp.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+
+      toast.success("Verification code sent to your email 📩");
+
+      navigate("/verify"); // we will build this next 👀
     } catch (err) {
-      const message = err.errors?.[0]?.message || "Login failed";
+      const message = err.errors?.[0]?.message || "Signup failed";
       setErrorMsg(message);
       toast.error(message);
     }
@@ -46,55 +57,54 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-[#f5efe8] flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-6xl mx-auto">
-        <Link to="/" className="flex items-center gap-3 mb-6 px-2 w-max">
+        {/* BRAND */}
+        <div className="flex items-center gap-3 mb-6 px-2">
           <img src={logo} alt="logo" className="h-10" />
           <span className="font-semibold text-xl tracking-tight">
             Cooks <br /> Delight
           </span>
-        </Link>
+        </div>
 
-        <div className="flex flex-col lg:flex-row rounded-2xl overflow-hidden border border-gray-300">
-          <div className="hidden md:block lg:w-[55%] h-75 lg:h-auto relative">
+        {/* CARD */}
+        <div className="flex rounded-3xl overflow-hidden border border-gray-300">
+          {/* IMAGE */}
+          <div className="w-[55%] hidden md:block">
             <img
               src={loginImg}
               alt="cooking"
-              className="w-full h-full object-cover object-[0%_center]"
+              className="w-full h-full object-cover object-[30%_center]"
             />
-            <div className="absolute inset-0 bg-black/50"></div>
           </div>
 
-          <div className="w-full lg:w-[45%] bg-[#f5efe8] px-10 md:px-16 py-12 md:py-16 flex flex-col justify-center">
-            <h1 className="text-5xl md:text-7xl text-center font-extrabold mb-4">
-              LOG IN
+          {/* FORM */}
+          <div className="w-full md:w-[55%] bg-[#f5efe8] px-16 py-16 flex flex-col justify-center">
+            <h1 className="text-7xl text-center font-extrabold mb-4">
+              SIGN UP
             </h1>
 
-            <p className="text-gray-600 mb-8 md:mb-10 text-base md:text-lg text-center leading-relaxed max-w-lg mx-auto">
-              Welcome back to your kitchen. Log in to access your saved recipes,
-              favorite dishes, and personal cooking space.
+            <p className="text-gray-600 mb-10 text-lg text-center leading-relaxed max-w-lg">
+              Create your account and start your cooking journey today.
             </p>
 
             <form
-              className="flex flex-col gap-5 max-w-lg mx-auto w-full"
+              className="flex flex-col gap-6 max-w-lg"
               onSubmit={handleSubmit}
             >
+              {/* EMAIL */}
               <div>
-                <label className="text-sm font-bold tracking-wide">
-                  EMAIL OR USERNAME
-                </label>
+                <label className="text-sm font-bold tracking-wide">EMAIL</label>
                 <input
-                  type="text"
+                  type="email"
                   className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"
-                  onChange={(e) =>
-                    setForm({ ...form, identifier: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
               </div>
 
+              {/* PASSWORD */}
               <div className="relative">
                 <label className="text-sm font-bold tracking-wide">
                   PASSWORD
                 </label>
-
                 <input
                   type={showPassword ? "text" : "password"}
                   className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400 pr-12"
@@ -106,38 +116,46 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-13.75 text-gray-600 hover:text-black"
+                  className="absolute right-4 top-[55px] text-gray-600 hover:text-black"
                 >
                   {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
                 </button>
               </div>
 
+              {/* CONFIRM PASSWORD */}
+              <div>
+                <label className="text-sm font-bold tracking-wide">
+                  CONFIRM PASSWORD
+                </label>
+                <input
+                  type="password"
+                  className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"
+                  onChange={(e) =>
+                    setForm({ ...form, confirmPassword: e.target.value })
+                  }
+                />
+              </div>
+
+              {/* BUTTON */}
               <button className="bg-orange-400 text-black py-4 rounded-3xl mt-4 text-lg font-semibold hover:bg-orange-500 transition">
-                SIGN IN NOW!
+                CREATE ACCOUNT
               </button>
 
+              {/* ERROR */}
               {errorMsg && (
                 <p className="text-red-500 text-sm text-center">{errorMsg}</p>
               )}
             </form>
 
-            <div className="max-w-lg mx-auto w-full mt-4">
-              <SignInButton mode="modal">
-                <button className="w-full border border-black py-4 rounded-3xl text-lg font-semibold hover:bg-gray-100 transition">
-                  CONTINUE WITH EMAIL
-                </button>
-              </SignInButton>
-            </div>
+            <div className="my-8 border-t border-gray-800 w-full max-w-lg"></div>
 
-            <div className="my-6 md:my-8 border-t border-gray-800 w-full max-w-lg mx-auto"></div>
-
-            <p className="text-base text-center max-w-lg mx-auto">
-              DON’T HAVE AN ACCOUNT?{" "}
+            <p className="text-base max-w-lg text-center">
+              ALREADY HAVE AN ACCOUNT?{" "}
               <span
+                onClick={() => navigate("/login")}
                 className="text-orange-400 font-medium cursor-pointer underline"
-                onClick={() => navigate("/signup")}
               >
-                CREATE ONE NOW
+                LOG IN
               </span>
             </p>
           </div>

@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react";
 import loginImg from "../../assets/images/login.jpg";
 import logo from "../../assets/images/Logo.png";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const { signIn, isLoaded } = useSignIn();
@@ -45,12 +46,12 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-[#f5efe8] flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-6xl mx-auto">
-        <div className="flex items-center gap-3 mb-6 px-2">
+        <Link to="/" className="flex items-center gap-3 mb-6 px-2 w-max">
           <img src={logo} alt="logo" className="h-10" />
           <span className="font-semibold text-xl tracking-tight">
             Cooks <br /> Delight
           </span>
-        </div>
+        </Link>
 
         <div className="flex flex-col lg:flex-row rounded-2xl overflow-hidden border border-gray-300">
           <div className="hidden md:block lg:w-[55%] h-75 lg:h-auto relative">

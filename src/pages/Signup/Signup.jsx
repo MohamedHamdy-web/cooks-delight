@@ -14,12 +14,15 @@ export default function Signup() {
   const [statusMsg, setStatusMsg] = useState("");
 
   const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e) => {
@@ -34,7 +37,13 @@ export default function Signup() {
     setErrorMsg("");
     setStatusMsg("");
 
-    if (!form.email || !form.password) {
+    if (
+      !form.firstName ||
+      !form.lastName ||
+      !form.email ||
+      !form.password ||
+      !form.confirmPassword
+    ) {
       setErrorMsg("Please fill all fields");
       return;
     }
@@ -51,6 +60,8 @@ export default function Signup() {
 
     try {
       await signUp.create({
+        firstName: form.firstName,
+        lastName: form.lastName,
         emailAddress: form.email,
         password: form.password,
       });
@@ -72,7 +83,6 @@ export default function Signup() {
   return (
     <div className="min-h-screen bg-[#f5efe8] flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-6xl mx-auto">
-        {/* 🔗 LOGO */}
         <Link
           to="/"
           className="flex items-center gap-3 mb-6 px-2 w-fit hover:opacity-80 transition"
@@ -83,19 +93,16 @@ export default function Signup() {
           </span>
         </Link>
 
-        {/* CARD */}
         <div className="flex flex-col lg:flex-row rounded-3xl overflow-hidden border border-gray-300">
-          {/* IMAGE */}
           <div className="hidden md:block w-full lg:w-[55%] h-87.5 lg:h-auto relative">
             <img
               src={loginImg}
               alt="cooking"
-              className="w-full h-full object-cover object-[30%_center]"
+              className="w-full h-full object-cover object-[5%_center]"
             />
-            <div className="absolute inset-0 bg-black/40"></div>
+            <div className="absolute inset-0 bg-black/50"></div>
           </div>
 
-          {/* FORM */}
           <div className="w-full lg:w-[45%] bg-[#f5efe8] px-10 md:px-16 py-12 md:py-16 flex flex-col justify-center">
             <h1 className="text-5xl md:text-7xl text-center font-extrabold mb-4">
               SIGN UP
@@ -106,13 +113,41 @@ export default function Signup() {
               today!
             </p>
 
-            {/* FORM */}
             <form
               className="flex flex-col gap-5 max-w-lg mx-auto w-full"
               onSubmit={handleSubmit}
               aria-busy={isSubmitting}
             >
-              {/* EMAIL */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="text-sm font-bold tracking-wide">
+                    FIRST NAME
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"
+                    disabled={isSubmitting}
+                    onChange={(e) =>
+                      setForm({ ...form, firstName: e.target.value })
+                    }
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-bold tracking-wide">
+                    LAST NAME
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"
+                    disabled={isSubmitting}
+                    onChange={(e) =>
+                      setForm({ ...form, lastName: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="text-sm font-bold tracking-wide">EMAIL</label>
                 <input
@@ -123,7 +158,6 @@ export default function Signup() {
                 />
               </div>
 
-              {/* PASSWORD */}
               <div className="relative">
                 <label className="text-sm font-bold tracking-wide">
                   PASSWORD
@@ -148,24 +182,35 @@ export default function Signup() {
                 </button>
               </div>
 
-              {/* CONFIRM PASSWORD */}
-              <div>
+              <div className="relative">
                 <label className="text-sm font-bold tracking-wide">
                   CONFIRM PASSWORD
                 </label>
                 <input
-                  type="password"
-                  className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"
+                  type={showConfirmPassword ? "text" : "password"}
+                  className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400 pr-12"
                   disabled={isSubmitting}
                   onChange={(e) =>
                     setForm({ ...form, confirmPassword: e.target.value })
                   }
                 />
+
+                <button
+                  type="button"
+                  disabled={isSubmitting}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-13.75 text-gray-600 hover:text-black"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={22} />
+                  ) : (
+                    <Eye size={22} />
+                  )}
+                </button>
               </div>
 
               <div id="clerk-captcha" className="w-full" />
 
-              {/* BUTTON */}
               <button
                 type="submit"
                 disabled={!isLoaded || isSubmitting}
@@ -182,13 +227,11 @@ export default function Signup() {
                 <p className="text-sm text-center text-gray-600">{statusMsg}</p>
               )}
 
-              {/* ERROR */}
               {errorMsg && (
                 <p className="text-red-500 text-sm text-center">{errorMsg}</p>
               )}
             </form>
 
-            {/* CLERK BUTTON */}
             <div className="max-w-lg mx-auto w-full mt-4">
               <SignUpButton mode="modal">
                 <button
@@ -200,10 +243,8 @@ export default function Signup() {
               </SignUpButton>
             </div>
 
-            {/* DIVIDER */}
             <div className="my-6 md:my-8 border-t border-gray-800 w-full max-w-lg mx-auto"></div>
 
-            {/* LOGIN LINK */}
             <p className="text-base text-center max-w-lg mx-auto">
               ALREADY HAVE AN ACCOUNT?{" "}
               <span

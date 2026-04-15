@@ -86,7 +86,7 @@ export default function Login() {
             >
               <div>
                 <label className="text-sm font-bold tracking-wide">
-                  EMAIL OR USERNAME
+                  EMAIL
                 </label>
                 <input
                   type="text"

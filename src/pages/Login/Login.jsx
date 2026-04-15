@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useSignIn, SignInButton } from "@clerk/react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Eye, EyeOff } from "lucide-react";
 import loginImg from "../../assets/images/login.jpg";
 import logo from "../../assets/images/Logo.png";
-import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
   const { signIn, isLoaded } = useSignIn();
@@ -52,26 +52,28 @@ export default function Login() {
           </span>
         </div>
 
-        <div className="flex rounded-3xl overflow-hidden border border-gray-300">
-          <div className="w-[55%] hidden md:block relative">
+        <div className="flex flex-col lg:flex-row rounded-2xl overflow-hidden border border-gray-300">
+          <div className="hidden md:block lg:w-[55%] h-75 lg:h-auto relative">
             <img
               src={loginImg}
               alt="cooking"
-              className="w-full h-full object-cover object-[5%_center]"
+              className="w-full h-full object-cover object-[0%_center]"
             />
             <div className="absolute inset-0 bg-black/50"></div>
           </div>
 
-          <div className="w-full md:w-[55%] bg-[#f5efe8] px-16 py-16 flex flex-col justify-center">
-            <h1 className="text-8xl text-center font-extrabold mb-4">LOG IN</h1>
+          <div className="w-full lg:w-[45%] bg-[#f5efe8] px-10 md:px-16 py-12 md:py-16 flex flex-col justify-center">
+            <h1 className="text-5xl md:text-7xl text-center font-extrabold mb-4">
+              LOG IN
+            </h1>
 
-            <p className="text-gray-600 mb-10 text-xl text-center leading-relaxed max-w-lg">
+            <p className="text-gray-600 mb-8 md:mb-10 text-base md:text-lg text-center leading-relaxed max-w-lg mx-auto">
               Welcome back to your kitchen. Log in to access your saved recipes,
               favorite dishes, and personal cooking space.
             </p>
 
             <form
-              className="flex flex-col gap-6 max-w-lg"
+              className="flex flex-col gap-5 max-w-lg mx-auto w-full"
               onSubmit={handleSubmit}
             >
               <div>
@@ -118,7 +120,7 @@ export default function Login() {
               )}
             </form>
 
-            <div className="max-w-lg mt-4">
+            <div className="max-w-lg mx-auto w-full mt-4">
               <SignInButton mode="modal">
                 <button className="w-full border border-black py-4 rounded-3xl text-lg font-semibold hover:bg-gray-100 transition">
                   CONTINUE WITH EMAIL
@@ -126,9 +128,9 @@ export default function Login() {
               </SignInButton>
             </div>
 
-            <div className="my-8 border-t border-gray-800 w-full max-w-lg"></div>
+            <div className="my-6 md:my-8 border-t border-gray-800 w-full max-w-lg mx-auto"></div>
 
-            <p className="text-base max-w-lg text-center">
+            <p className="text-base text-center max-w-lg mx-auto">
               DON’T HAVE AN ACCOUNT?{" "}
               <span className="text-orange-400 font-medium cursor-pointer underline">
                 CREATE ONE NOW

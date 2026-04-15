@@ -53,12 +53,13 @@ export default function Login() {
         </div>
 
         <div className="flex rounded-3xl overflow-hidden border border-gray-300">
-          <div className="w-[55%] hidden md:block">
+          <div className="w-[55%] hidden md:block relative">
             <img
               src={loginImg}
               alt="cooking"
               className="w-full h-full object-cover object-[5%_center]"
             />
+            <div className="absolute inset-0 bg-black/50"></div>
           </div>
 
           <div className="w-full md:w-[55%] bg-[#f5efe8] px-16 py-16 flex flex-col justify-center">

@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { useSignIn } from "@clerk/react";
+import { useSignIn, SignInButton } from "@clerk/react";
 import loginImg from "../../assets/images/login.jpg";
 import logo from "../../assets/images/Logo.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const { signIn, isLoaded } = useSignIn();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    username: "",
+    identifier: "",
     password: "",
   });
 
@@ -18,11 +20,11 @@ export default function Login() {
 
     try {
       await signIn.create({
-        identifier: form.username,
+        identifier: form.identifier,
         password: form.password,
       });
 
-      window.location.href = "/";
+      navigate("/");
     } catch (err) {
       alert(err.errors?.[0]?.message || "Login failed");
     }
@@ -43,7 +45,7 @@ export default function Login() {
             <img
               src={loginImg}
               alt="cooking"
-              className="w-full h-full object-cover object-[center_left]"
+              className="w-full h-full object-cover object-[5%_center]"
             />
           </div>
 
@@ -61,13 +63,14 @@ export default function Login() {
             >
               <div>
                 <label className="text-sm font-bold tracking-wide">
-                  USERNAME
+                  EMAIL OR USERNAME
                 </label>
                 <input
                   type="text"
+                  placeholder="Enter your email or username"
                   className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"
                   onChange={(e) =>
-                    setForm({ ...form, username: e.target.value })
+                    setForm({ ...form, identifier: e.target.value })
                   }
                 />
               </div>
@@ -89,6 +92,14 @@ export default function Login() {
                 SIGN IN NOW!
               </button>
             </form>
+
+            <div className="max-w-lg mt-4">
+              <SignInButton mode="modal">
+                <button className="w-full border border-black py-4 rounded-3xl text-lg font-semibold hover:bg-gray-100 transition">
+                  CONTINUE WITH EMAIL
+                </button>
+              </SignInButton>
+            </div>
 
             <div className="my-8 border-t border-gray-800 w-full max-w-lg"></div>
 

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useSignIn, SignInButton } from "@clerk/react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import loginImg from "../../assets/images/login.jpg";
 import logo from "../../assets/images/Logo.png";
-import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
   const { signIn, isLoaded } = useSignIn();
@@ -13,20 +15,30 @@ export default function Login() {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!isLoaded) return;
 
+    setErrorMsg("");
+
     try {
-      await signIn.create({
+      const result = await signIn.create({
         identifier: form.identifier,
         password: form.password,
       });
 
-      navigate("/");
+      if (result.status === "complete") {
+        toast.success("Welcome back 👋");
+        navigate("/");
+      }
     } catch (err) {
-      alert(err.errors?.[0]?.message || "Login failed");
+      const message = err.errors?.[0]?.message || "Login failed";
+      setErrorMsg(message);
+      toast.error(message);
     }
   };
 
@@ -67,7 +79,6 @@ export default function Login() {
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter your email or username"
                   className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"
                   onChange={(e) =>
                     setForm({ ...form, identifier: e.target.value })
@@ -75,22 +86,35 @@ export default function Login() {
                 />
               </div>
 
-              <div>
+              <div className="relative">
                 <label className="text-sm font-bold tracking-wide">
                   PASSWORD
                 </label>
+
                 <input
-                  type="password"
-                  className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"
+                  type={showPassword ? "text" : "password"}
+                  className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400 pr-12"
                   onChange={(e) =>
                     setForm({ ...form, password: e.target.value })
                   }
                 />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-13.75 text-gray-600 hover:text-black"
+                >
+                  {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
+                </button>
               </div>
 
               <button className="bg-orange-400 text-black py-4 rounded-3xl mt-4 text-lg font-semibold hover:bg-orange-500 transition">
                 SIGN IN NOW!
               </button>
+
+              {errorMsg && (
+                <p className="text-red-500 text-sm text-center">{errorMsg}</p>
+              )}
             </form>
 
             <div className="max-w-lg mt-4">

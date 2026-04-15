@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Optional reset */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  @apply bg-white text-black
+}

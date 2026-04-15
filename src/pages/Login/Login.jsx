@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useSignIn, SignInButton } from "@clerk/react";
+import { SignInButton } from "@clerk/react";
+import { useSignIn } from "@clerk/react/legacy";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react";
@@ -8,7 +9,7 @@ import logo from "../../assets/images/Logo.png";
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  const { signIn, isLoaded } = useSignIn();
+  const { signIn, isLoaded, setActive } = useSignIn();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -22,7 +23,10 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isLoaded) return;
+    if (!isLoaded) {
+      setErrorMsg("Authentication is still loading. Please try again.");
+      return;
+    }
 
     setErrorMsg("");
 
@@ -33,9 +37,12 @@ export default function Login() {
       });
 
       if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
         toast.success("Welcome back 👋");
         navigate("/");
+        return;
       }
+      setErrorMsg("Login needs another verification step.");
     } catch (err) {
       const message = err.errors?.[0]?.message || "Login failed";
       setErrorMsg(message);
@@ -79,7 +86,7 @@ export default function Login() {
             >
               <div>
                 <label className="text-sm font-bold tracking-wide">
-                  EMAIL OR USERNAME
+                  EMAIL
                 </label>
                 <input
                   type="text"
@@ -112,8 +119,11 @@ export default function Login() {
                 </button>
               </div>
 
-              <button className="bg-orange-400 text-black py-4 rounded-3xl mt-4 text-lg font-semibold hover:bg-orange-500 transition">
-                SIGN IN NOW!
+              <button
+                disabled={!isLoaded}
+                className="bg-orange-400 text-black py-4 rounded-3xl mt-4 text-lg font-semibold hover:bg-orange-500 transition"
+              >
+                {isLoaded ? "SIGN IN NOW!" : "LOADING..."}
               </button>
 
               {errorMsg && (
@@ -133,7 +143,10 @@ export default function Login() {
 
             <p className="text-base text-center max-w-lg mx-auto">
               DON’T HAVE AN ACCOUNT?{" "}
-              <span className="text-orange-400 font-medium cursor-pointer underline">
+              <span
+                className="text-orange-400 font-medium cursor-pointer underline"
+                onClick={() => navigate("/signup")}
+              >
                 CREATE ONE NOW
               </span>
             </p>

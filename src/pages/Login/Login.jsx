@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSignIn } from "@clerk/react";
 import loginImg from "../../assets/images/login.jpg";
+import logo from "../../assets/images/Logo.png";
 
 export default function Login() {
   const { signIn, isLoaded } = useSignIn();
@@ -23,65 +24,80 @@ export default function Login() {
 
       window.location.href = "/";
     } catch (err) {
-      console.log(err);
-      alert(err.errors[0].message);
+      alert(err.errors?.[0]?.message || "Login failed");
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#f5efe8] flex items-center justify-center p-6">
-      <div className="w-full max-w-5xl flex rounded-2xl overflow-hidden border">
-        {/* LEFT IMAGE */}
-        <div className="w-1/2 hidden md:block">
-          <img
-            src={loginImg}
-            alt="cooking"
-            className="w-full h-full object-cover"
-          />
+    <div className="min-h-screen bg-[#f5efe8] flex items-center justify-center px-6 py-10">
+      <div className="w-full max-w-7xl">
+        <div className="flex items-center gap-3 mb-6 px-2">
+          <img src={logo} alt="logo" className="h-10" />
+          <span className="font-semibold text-xl tracking-tight">
+            Cooks <br /> Delight
+          </span>
         </div>
 
-        {/* RIGHT FORM */}
-        <div className="w-full md:w-1/2 bg-[#f5efe8] p-10 flex flex-col justify-center">
-          <h1 className="text-4xl font-extrabold mb-3">LOG IN</h1>
+        <div className="flex rounded-3xl overflow-hidden border border-gray-300">
+          <div className="w-[40%] hidden md:block">
+            <img
+              src={loginImg}
+              alt="cooking"
+              className="w-full h-full object-cover object-[center_left] "
+            />
+          </div>
 
-          <p className="text-gray-600 mb-6 text-sm leading-relaxed">
-            Welcome back to your kitchen. Log in to access your saved recipes,
-            favorite dishes, and personal cooking space.
-          </p>
+          <div className="w-full md:w-[60%] bg-[#f5efe8] px-16 py-16 flex flex-col justify-center">
+            <h1 className="text-8xl text-center font-extrabold mb-4">LOG IN</h1>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {/* USERNAME */}
-            <div>
-              <label className="text-xs font-semibold">USERNAME</label>
-              <input
-                type="text"
-                className="w-full border rounded-md p-2 mt-1 outline-none focus:ring-2 focus:ring-orange-400"
-                onChange={(e) => setForm({ ...form, username: e.target.value })}
-              />
-            </div>
+            <p className="text-gray-600 mb-10 text-base leading-relaxed max-w-lg">
+              Welcome back to your kitchen. Log in to access your saved recipes,
+              favorite dishes, and personal cooking space.
+            </p>
 
-            {/* PASSWORD */}
-            <div>
-              <label className="text-xs font-semibold">PASSWORD</label>
-              <input
-                type="password"
-                className="w-full border rounded-md p-2 mt-1 outline-none focus:ring-2 focus:ring-orange-400"
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-              />
-            </div>
+            <form
+              className="flex flex-col gap-6 max-w-lg"
+              onSubmit={handleSubmit}
+            >
+              <div>
+                <label className="text-sm font-bold tracking-wide">
+                  USERNAME
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"
+                  onChange={(e) =>
+                    setForm({ ...form, username: e.target.value })
+                  }
+                />
+              </div>
 
-            {/* BUTTON */}
-            <button className="bg-orange-500 text-white py-2 rounded-md mt-2 hover:bg-orange-600 transition">
-              SIGN IN
-            </button>
-          </form>
+              <div>
+                <label className="text-sm font-bold tracking-wide">
+                  PASSWORD
+                </label>
+                <input
+                  type="password"
+                  className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
+                />
+              </div>
 
-          {/* FOOTER */}
-          <div className="mt-6 text-sm text-center">
-            Don’t have an account?{" "}
-            <span className="text-orange-500 cursor-pointer">
-              Create one now
-            </span>
+              <button className="bg-orange-400 text-black py-4 rounded-3xl mt-4 text-lg font-semibold hover:bg-orange-500 transition">
+                SIGN IN NOW!
+              </button>
+            </form>
+
+            <div className="my-8 border-t border-gray-800 w-full max-w-lg"></div>
+
+            <p className="text-base max-w-lg text-center">
+              DON’T HAVE AN ACCOUNT?{" "}
+              <span className="text-orange-400 font-medium cursor-pointer underline">
+                CREATE ONE NOW
+              </span>
+            </p>
           </div>
         </div>
       </div>

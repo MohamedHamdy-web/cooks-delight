@@ -30,7 +30,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-[#f5efe8] flex items-center justify-center px-6 py-10">
-      <div className="w-full max-w-7xl">
+      <div className="w-full max-w-6xl mx-auto">
         <div className="flex items-center gap-3 mb-6 px-2">
           <img src={logo} alt="logo" className="h-10" />
           <span className="font-semibold text-xl tracking-tight">
@@ -39,18 +39,18 @@ export default function Login() {
         </div>
 
         <div className="flex rounded-3xl overflow-hidden border border-gray-300">
-          <div className="w-[40%] hidden md:block">
+          <div className="w-[55%] hidden md:block">
             <img
               src={loginImg}
               alt="cooking"
-              className="w-full h-full object-cover object-[center_left] "
+              className="w-full h-full object-cover object-[center_left]"
             />
           </div>
 
-          <div className="w-full md:w-[60%] bg-[#f5efe8] px-16 py-16 flex flex-col justify-center">
+          <div className="w-full md:w-[55%] bg-[#f5efe8] px-16 py-16 flex flex-col justify-center">
             <h1 className="text-8xl text-center font-extrabold mb-4">LOG IN</h1>
 
-            <p className="text-gray-600 mb-10 text-base leading-relaxed max-w-lg">
+            <p className="text-gray-600 mb-10 text-xl text-center leading-relaxed max-w-lg">
               Welcome back to your kitchen. Log in to access your saved recipes,
               favorite dishes, and personal cooking space.
             </p>

@@ -85,9 +85,7 @@ export default function Login() {
               onSubmit={handleSubmit}
             >
               <div>
-                <label className="text-sm font-bold tracking-wide">
-                  EMAIL
-                </label>
+                <label className="text-sm font-bold tracking-wide">EMAIL</label>
                 <input
                   type="text"
                   className="w-full border border-black rounded-3xl p-4 mt-2 text-lg outline-none focus:ring-2 focus:ring-orange-400"

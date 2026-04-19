@@ -21,7 +21,7 @@ export default function Recipes() {
       <Navbar />
 
       <main className="px-4 pb-6 pt-4 sm:px-6 lg:px-8">
-        <section className="mx-auto max-w-7xl rounded-[2rem] bg-white px-6 py-10 shadow-[0_18px_40px_rgba(91,62,44,0.08)] sm:px-8 lg:px-10">
+        <section className="mx-auto max-w-7xl rounded-4xl bg-white px-6 py-10 shadow-[0_18px_40px_rgba(91,62,44,0.08)] sm:px-8 lg:px-10">
           <span className="inline-flex rounded-full bg-[#f3a437] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#2c241d]">
             Recipes
           </span>

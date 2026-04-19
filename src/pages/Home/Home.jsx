@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import FeaturedRecipesSection from "../../components/FeaturedRecipesSection";
 import Navbar from "../../components/Navbar";
+import RecipesJourneySection from "../../components/RecipesJourneySection";
 import breakfastImage from "../../assets/images/breakfast.png";
 import dessertImage from "../../assets/images/dessert.png";
 import dinnerImage from "../../assets/images/dinner.png";
@@ -125,6 +126,7 @@ export default function Home() {
           </section>
 
           <FeaturedRecipesSection />
+          <RecipesJourneySection />
         </div>
       </main>
     </div>

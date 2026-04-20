@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import AboutChronicleSection from "../../components/AboutChronicleSection";
 import FeaturedRecipesSection from "../../components/FeaturedRecipesSection";
+import JoinTheFunSection from "../../components/JoinTheFunSection";
 import Navbar from "../../components/Navbar";
 import RecipesJourneySection from "../../components/RecipesJourneySection";
 import breakfastImage from "../../assets/images/breakfast.png";
@@ -129,6 +130,7 @@ export default function Home() {
           <FeaturedRecipesSection />
           <RecipesJourneySection />
           <AboutChronicleSection />
+          <JoinTheFunSection />
         </div>
       </main>
     </div>

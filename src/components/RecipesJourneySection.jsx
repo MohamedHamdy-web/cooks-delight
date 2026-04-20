@@ -115,30 +115,30 @@ export default function RecipesJourneySection() {
   }, [activeFilter, recipes]);
 
   return (
-    <section className="rounded-[2.25rem] bg-[#f5efe8] px-3 py-10 sm:px-5 sm:py-12">
+    <section className="rounded-[2.25rem] bg-[#f5efe8] px-2 py-8 sm:px-5 sm:py-12">
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
-          <span className="inline-flex rounded-full bg-[#ff7f6a] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+          <span className="inline-flex rounded-full bg-[#ff7f6a] px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.14em] text-white sm:px-3 sm:text-[10px]">
             Recipes
           </span>
 
-          <h2 className="mx-auto mt-4 max-w-[12ch] text-4xl font-black uppercase leading-[0.9] tracking-[-0.03em] text-[#2d2822] sm:text-5xl">
+          <h2 className="mx-auto mt-3 max-w-[13ch] text-[1.7rem] font-black uppercase leading-[0.9] tracking-[-0.03em] text-[#2d2822] sm:mt-4 sm:max-w-[12ch] sm:text-5xl">
             Embark On A Journey
           </h2>
 
-          <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-[#7a6d62]">
-            With our diverse collection of recipes we have something to <br />{" "}
-            satisfy every palate.
+          <p className="mx-auto mt-3 max-w-[24ch] text-[11px] leading-4 text-[#8a7c6f] sm:mt-4 sm:max-w-md sm:text-sm sm:leading-6">
+            With our diverse collection of recipes we have something to satisfy
+            every palate.
           </p>
         </div>
 
-        <div className="mt-7 flex gap-2 overflow-x-auto pb-2 sm:mt-8 sm:justify-center">
+        <div className="mt-6 flex flex-wrap justify-center gap-2 pb-1 sm:mt-8">
           {FILTERS.map((filter) => (
             <button
               key={filter.id}
               type="button"
               onClick={() => setActiveFilter(filter.id)}
-              className={`shrink-0 rounded-full border px-4 py-2 text-[10px] font-bold uppercase tracking-[0.12em] transition sm:px-5 ${
+              className={`min-w-16.5 rounded-full border px-3 py-1.5 text-[8px] font-bold uppercase tracking-widest transition sm:min-w-0 sm:px-5 sm:py-2 sm:text-[10px] sm:tracking-[0.12em] ${
                 activeFilter === filter.id
                   ? "border-[black] bg-[#9FDC26] text-[#2d2822]"
                   : "border-[#d3c7ba] bg-[#f7f1e9] text-[#8a7c6f] hover:bg-white cursor-pointer hover:text-black hover:border-black"

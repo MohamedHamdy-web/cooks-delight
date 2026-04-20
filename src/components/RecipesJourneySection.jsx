@@ -14,7 +14,9 @@ const FILTERS = [
 
 function formatRecipeSummary(recipe) {
   const mealType = recipe.mealType?.[0]?.toLowerCase();
-  const cuisine = recipe.cuisine ? `${recipe.cuisine.toLowerCase()} flavor` : null;
+  const cuisine = recipe.cuisine
+    ? `${recipe.cuisine.toLowerCase()} flavor`
+    : null;
   const descriptor = [mealType, cuisine].filter(Boolean).join(" with ");
 
   return `Indulge in the rich and savory symphony of flavors with ${recipe.name}${
@@ -125,8 +127,8 @@ export default function RecipesJourneySection() {
           </h2>
 
           <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-[#7a6d62]">
-            With our diverse collection of recipes we have something to satisfy
-            every palate.
+            With our diverse collection of recipes we have something to <br />{" "}
+            satisfy every palate.
           </p>
         </div>
 
@@ -138,8 +140,8 @@ export default function RecipesJourneySection() {
               onClick={() => setActiveFilter(filter.id)}
               className={`shrink-0 rounded-full border px-4 py-2 text-[10px] font-bold uppercase tracking-[0.12em] transition sm:px-5 ${
                 activeFilter === filter.id
-                  ? "border-[#7aa10f] bg-[#c7eb3f] text-[#2d2822]"
-                  : "border-[#d3c7ba] bg-[#f7f1e9] text-[#8a7c6f] hover:bg-white"
+                  ? "border-[black] bg-[#9FDC26] text-[#2d2822]"
+                  : "border-[#d3c7ba] bg-[#f7f1e9] text-[#8a7c6f] hover:bg-white cursor-pointer hover:text-black hover:border-black"
               }`}
             >
               {filter.label}

@@ -54,7 +54,11 @@ export default function Navbar() {
               }}
               className="flex items-center gap-3"
             >
-              <img src={logo} alt="Cooks Delight logo" className="h-10 w-auto" />
+              <img
+                src={logo}
+                alt="Cooks Delight logo"
+                className="h-10 w-auto"
+              />
               <span className="text-sm font-semibold leading-tight text-[#3f2f24]">
                 Cooks
                 <br />
@@ -77,7 +81,7 @@ export default function Navbar() {
 
             <div className="hidden items-center justify-end gap-2 lg:flex">
               {isSearchOpen ? (
-                <label className="flex h-11 w-[220px] items-center gap-3 rounded-full bg-[#f4eee8] px-4 text-[#6f5d50] xl:w-[260px]">
+                <label className="flex h-11 w-55 items-center gap-3 rounded-full bg-[#f4eee8] px-4 text-[#6f5d50] xl:w-65">
                   <Search size={17} strokeWidth={2.25} />
                   <input
                     ref={searchInputRef}
@@ -159,7 +163,9 @@ export default function Navbar() {
 
             <button
               type="button"
-              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-label={
+                isMenuOpen ? "Close navigation menu" : "Open navigation menu"
+              }
               onClick={() => setIsMenuOpen((open) => !open)}
               className={`flex h-10 w-10 items-center justify-center rounded-full bg-[#f4eee8] text-[#6f5d50] transition hover:bg-[#ede4da] hover:text-[#3f2f24] lg:hidden ${
                 isSearchOpen ? "hidden" : "ml-auto"
@@ -175,7 +181,7 @@ export default function Navbar() {
         </div>
 
         {isMenuOpen && !isSearchOpen ? (
-          <div className="mt-3 rounded-[2rem] border border-[#e8ddd1] bg-white p-5 shadow-[0_18px_40px_rgba(91,62,44,0.12)] lg:hidden">
+          <div className="mt-3 rounded-4xl border border-[#e8ddd1] bg-white p-5 shadow-[0_18px_40px_rgba(91,62,44,0.12)] lg:hidden">
             <nav className="flex flex-col">
               {navItems.map((item) => (
                 <NavLink
@@ -187,7 +193,9 @@ export default function Navbar() {
                   }}
                   className={({ isActive }) =>
                     `border-b border-[#eee5dc] py-4 text-sm font-semibold tracking-[0.16em] transition ${
-                      isActive ? "text-[#ef7c4b]" : "text-[#3f2f24] hover:text-[#ef7c4b]"
+                      isActive
+                        ? "text-[#ef7c4b]"
+                        : "text-[#3f2f24] hover:text-[#ef7c4b]"
                     }`
                   }
                 >

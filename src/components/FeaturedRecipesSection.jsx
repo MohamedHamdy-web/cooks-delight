@@ -47,7 +47,7 @@ function RecipeCardSkeleton() {
   );
 }
 
-export default function FeaturedRecipesSection({ title = "Featured Recipes" }) {
+export default function FeaturedRecipesSection({ title }) {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -107,7 +107,7 @@ export default function FeaturedRecipesSection({ title = "Featured Recipes" }) {
   return (
     <section className="rounded-[1.65rem] border border-[#ddd2c6] bg-[#f8f2ea] px-4 py-5 shadow-[0_16px_34px_rgba(91,62,44,0.06)] sm:px-5 sm:py-6 lg:px-6">
       <div className="flex items-center justify-between gap-4">
-        <h2 className="text-2xl font-black uppercase tracking-[-0.02em] text-[#2d2822] sm:text-3xl">
+        <h2 className="text-2xl font-bold uppercase tracking-[0.02em] text-[#2d2822] sm:text-3xl">
           {title}
         </h2>
 
@@ -119,7 +119,7 @@ export default function FeaturedRecipesSection({ title = "Featured Recipes" }) {
               setPage((currentPage) => Math.max(0, currentPage - 1))
             }
             disabled={page === 0 || loading}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#b9ad9f] text-[#7b6d60] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-45"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#b9ad9f] text-[#7b6d60] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-45 cursor-pointer"
           >
             <ChevronLeft size={16} />
           </button>
@@ -133,7 +133,7 @@ export default function FeaturedRecipesSection({ title = "Featured Recipes" }) {
               )
             }
             disabled={page >= totalPages - 1 || loading}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#7b6d60] text-[#2f261f] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-45"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#7b6d60] text-[#2f261f] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-45 cursor-pointer"
           >
             <ChevronRight size={16} />
           </button>
@@ -184,7 +184,7 @@ export default function FeaturedRecipesSection({ title = "Featured Recipes" }) {
                   </span>
 
                   <Link
-                    to={`/recipes?recipeId=${recipe.id}`}
+                    to={`/recipes/${recipe.id}`}
                     className="inline-flex h-10 items-center justify-center rounded-full border border-[#8d7e70] px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#2e2822] transition hover:bg-[#f4ece3]"
                   >
                     View Recipe

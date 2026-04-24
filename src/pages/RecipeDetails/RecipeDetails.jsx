@@ -261,7 +261,7 @@ export default function RecipeDetails() {
             </div>
           </div>
           <div className="mt-7">
-            <FeaturedRecipesSection />
+            <FeaturedRecipesSection title="Similar Recipes" />
           </div>
           <div className="mt-7">
             <JoinTheFunSection />

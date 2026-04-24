@@ -47,7 +47,7 @@ function RecipeCardSkeleton() {
   );
 }
 
-export default function FeaturedRecipesSection({ title = "Featured Recipes" }) {
+export default function FeaturedRecipesSection({ title }) {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -107,7 +107,7 @@ export default function FeaturedRecipesSection({ title = "Featured Recipes" }) {
   return (
     <section className="rounded-[1.65rem] border border-[#ddd2c6] bg-[#f8f2ea] px-4 py-5 shadow-[0_16px_34px_rgba(91,62,44,0.06)] sm:px-5 sm:py-6 lg:px-6">
       <div className="flex items-center justify-between gap-4">
-        <h2 className="text-2xl font-black uppercase tracking-[-0.02em] text-[#2d2822] sm:text-3xl">
+        <h2 className="text-2xl font-bold uppercase tracking-[0.02em] text-[#2d2822] sm:text-3xl">
           {title}
         </h2>
 

@@ -128,7 +128,7 @@ export default function Home() {
             </div>
           </section>
 
-          <FeaturedRecipesSection />
+          <FeaturedRecipesSection title="Featured Recipes" />
           <RecipesJourneySection />
           <AboutChronicleSection />
           <JoinTheFunSection />

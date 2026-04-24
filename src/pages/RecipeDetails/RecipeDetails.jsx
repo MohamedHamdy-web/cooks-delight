@@ -81,7 +81,7 @@ export default function RecipeDetails() {
                 Recipe
               </span>
             </div>
-            <h1 className="lg:text-[80px] md:text-6xl text-[38px] font-extrabold uppercase text-center text-[#262522] leading-tight mb-4">
+            <h1 className="lg:text-[80px] md:text-6xl text-[38px] font-extrabold uppercase text-center text-[#262522] mb-4">
               {recipe.name.split(" ").slice(0, 1).join(" ")}
               <br />
               {recipe.name.split(" ").slice(1).join(" ")}

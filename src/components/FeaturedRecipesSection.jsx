@@ -119,7 +119,7 @@ export default function FeaturedRecipesSection({ title = "Featured Recipes" }) {
               setPage((currentPage) => Math.max(0, currentPage - 1))
             }
             disabled={page === 0 || loading}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#b9ad9f] text-[#7b6d60] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-45"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#b9ad9f] text-[#7b6d60] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-45 cursor-pointer"
           >
             <ChevronLeft size={16} />
           </button>
@@ -133,7 +133,7 @@ export default function FeaturedRecipesSection({ title = "Featured Recipes" }) {
               )
             }
             disabled={page >= totalPages - 1 || loading}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#7b6d60] text-[#2f261f] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-45"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-[#7b6d60] text-[#2f261f] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-45 cursor-pointer"
           >
             <ChevronRight size={16} />
           </button>

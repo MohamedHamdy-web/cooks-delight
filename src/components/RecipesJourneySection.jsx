@@ -188,7 +188,7 @@ export default function RecipesJourneySection() {
                     </span>
 
                     <Link
-                      to={`/recipes?recipeId=${recipe.id}`}
+                      to={`/recipes/${recipe.id}`}
                       className="inline-flex h-10 items-center justify-center rounded-full border border-[#8d7e70] px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#2e2822] transition hover:bg-[#f4ece3]"
                     >
                       View Recipe

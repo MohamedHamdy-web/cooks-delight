@@ -81,13 +81,13 @@ export default function RecipeDetails() {
                 Recipe
               </span>
             </div>
-            <h1 className="text-[80px] md:text-6xl font-extrabold uppercase text-center text-[#262522] leading-tight mb-4">
+            <h1 className="lg:text-[80px] md:text-6xl text-[38px] font-extrabold uppercase text-center text-[#262522] leading-tight mb-4">
               {recipe.name.split(" ").slice(0, 1).join(" ")}
               <br />
               {recipe.name.split(" ").slice(1).join(" ")}
             </h1>
 
-            <p className="text-center text-[#7a6d62] text-sm md:text-base leading-relaxed max-w-xl mx-auto mb-6">
+            <p className="text-center text-[#7a6d62] text-[21px]  md:text-base leading-relaxed max-w-xl mx-auto mb-6">
               Welcome to Cooks Delight, where culinary dreams come alive! <br />{" "}
               Today, we embark on a journey of flavors with a dish that promises{" "}
               <br />
@@ -117,15 +117,15 @@ export default function RecipeDetails() {
               </div>
             </div>
 
-            <div>
+            <div className="w-full max-w-4xl mx-auto rounded-2xl overflow-hidden mb-8">
               <img
                 src={recipe.image}
                 alt={recipe.name}
-                className="w-250 h-160 object-cover mx-auto rounded-2xl"
+                className="w-full h-160 object-cover mx-auto rounded-2xl sm:h-120 md:h-150"
               />
             </div>
 
-            <div className="flex items-center justify-center gap-4 mb-10 mt-10 flex-wrap">
+            <div className="flex items-center justify-center gap-4 mb-10 mt-3 flex-wrap">
               <div className="flex items-center gap-0.5">
                 {Array.from({ length: 5 }).map((_, i) => {
                   if (i < fullStars) {
@@ -183,11 +183,12 @@ export default function RecipeDetails() {
               ))}
             </div>
 
-            <div className="grid md:grid-cols-[1.4fr_1fr] gap-8 mb-10">
-              <div>
+            <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-8 mb-10">
+              <div className="order-2 md:order-1">
                 <h2 className="text-[40px] md:text-4xl font-bold uppercase text-[#2d2822] mb-4">
                   Instructions
                 </h2>
+
                 <ol className="flex flex-col gap-2">
                   {recipe.instructions?.map((step, i) => (
                     <li
@@ -221,11 +222,12 @@ export default function RecipeDetails() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-6 order-1 md:order-2">
                 <div className="bg-white rounded-2xl p-6 shadow-sm">
                   <h3 className="text-xs font-bold uppercase tracking-widest text-[#EE6352] mb-4">
                     Ingredients
                   </h3>
+
                   <ul className="flex flex-col gap-2">
                     {recipe.ingredients?.map((ing, i) => (
                       <li
@@ -243,11 +245,14 @@ export default function RecipeDetails() {
                   <h3 className="text-xs font-bold uppercase tracking-widest text-[#EE6352] mb-4">
                     Nutritional Value
                   </h3>
+
                   <p className="text-xs text-[#7a6d62] mb-3">Per serving:</p>
+
                   <div className="flex flex-col gap-1.5 text-sm text-[#2d2822]">
                     <p>Calories: ~{recipe.caloriesPerServing}</p>
                   </div>
                 </div>
+
                 <p className="text-[12px] text-[#33333399] font-medium mt-4 uppercase tracking-wide leading-relaxed">
                   Note: Nutritional values are approximate and may vary based on
                   specific ingredients and portion sizes.

@@ -170,7 +170,7 @@ export default function RecipesJourneySection() {
                 <img
                   src={recipe.image}
                   alt={recipe.name}
-                  className="h-52 w-full object-cover"
+                  className="h-52 w-full object-cover hover:scale-105 transition duration-300"
                 />
 
                 <div className="px-4 py-4 sm:px-5">

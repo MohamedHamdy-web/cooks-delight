@@ -78,7 +78,7 @@ export default function AboutPage() {
                 <h2 className="text-3xl md:text-4xl font-black uppercase text-[#1e1b18] leading-tight">
                   From Italian Roots to <br /> Global Palates
                 </h2>
-                <p className="text-[#7a6d62] text-sm leading-relaxed">
+                <p className="text-[#7a6d62] text-sm leading-relaxed tracking-tight">
                   Born and raised in the vibrant culinary landscape of Italy, my
                   journey with food began in the heart of my family's kitchen.
                   Surrounded by the aroma of fresh herbs, the sizzle of pans,
@@ -88,7 +88,7 @@ export default function AboutPage() {
                   markets of Florence, where I honed my skills and cultivated a
                   love for the simplicity and authenticity of Italian cuisine.
                 </p>
-                <p className="text-[#7a6d62] text-sm leading-relaxed">
+                <p className="text-[#7a6d62] text-sm leading-relaxed tracking-tight">
                   Driven by a relentless curiosity, I embarked on a global
                   culinary exploration, seeking inspiration from the rich
                   tapestry of flavors found in kitchens around the world. From
@@ -96,7 +96,7 @@ export default function AboutPage() {
                   each experience added a unique brushstroke to my culinary
                   canvas.
                 </p>
-                <p className="text-[#7a6d62] text-sm leading-relaxed">
+                <p className="text-[#7a6d62] text-sm leading-relaxed tracking-tight">
                   Whether you're a seasoned home cook or just starting your
                   culinary adventures, I'm delighted to have you here. Let's
                   stir, simmer, and savor the beauty of creating something
@@ -104,7 +104,7 @@ export default function AboutPage() {
                 </p>
                 <p className="text-[#7a6d62] text-sm">Warmest regards,</p>
                 <p
-                  className="text-[#2d2822] text-4xl italic"
+                  className="text-[#2d2822] text-2xl font-normal"
                   style={{ fontFamily: "'Homemade Apple', cursive" }}
                 >
                   Isabella Russo

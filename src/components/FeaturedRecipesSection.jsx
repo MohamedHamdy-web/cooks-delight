@@ -166,7 +166,7 @@ export default function FeaturedRecipesSection({ title }) {
               <img
                 src={recipe.image}
                 alt={recipe.name}
-                className="h-52 w-full object-cover sm:h-56"
+                className="h-52 w-full object-cover sm:h-56 hover:scale-105 transition duration-300"
               />
 
               <div className="px-4 py-4 sm:px-5">

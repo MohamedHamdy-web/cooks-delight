@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import Navbar from "../../components/Navbar";
 import chefImage from "../../assets/images/aboutus-hero.jpg";
 import gallery1 from "../../assets/images/aboutus-section.jpg";
@@ -13,6 +12,9 @@ import gallery8 from "../../assets/images/aboutus-8.jpg";
 import FeaturedRecipesSection from "../../components/FeaturedRecipesSection";
 import JoinTheFunSection from "../../components/JoinTheFunSection";
 import Footer from "../../components/Footer";
+import { IoLogoFacebook } from "react-icons/io";
+import { AiFillInstagram } from "react-icons/ai";
+import { FaYoutube } from "react-icons/fa";
 
 export default function AboutPage() {
   return (
@@ -44,8 +46,8 @@ export default function AboutPage() {
         </div>
       </section>
       <div className="mx-auto px-6 ">
-        <div className="border border-[#ddd2c6] rounded-[1.65rem] overflow-hidden p-4">
-          <section className="max-w-6xl mx-auto py-8">
+        <div className="border border-[#ddd2c6] rounded-[1.65rem] overflow-hidden pb-4">
+          <section className="px-6 py-8">
             <div className="grid md:grid-cols-2 gap-12 items-start">
               <div>
                 <div className="rounded-2xl overflow-hidden">
@@ -55,35 +57,21 @@ export default function AboutPage() {
                     className="w-full h-130 object-cover object-[center_30%] brightness-150"
                   />
                 </div>
-                <div className="mt-5 flex items-center gap-4">
-                  <span className="text-xs font-bold uppercase tracking-widest border border-[#2d2822] px-4 py-2 rounded-full flex items-center gap-2">
-                    Follow Me
-                    <div className="flex items-center gap-3">
-                      <a
-                        href="#"
-                        className="w-8 h-8 bg-[#1877f2] rounded-full flex items-center justify-center text-white"
-                      >
-                        <FaFacebookF size={14} />
-                      </a>
-                      <a
-                        href="#"
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-white"
-                        style={{
-                          background:
-                            "linear-gradient(to top right, #facc15, #ec4899, #9333ea)",
-                        }}
-                      >
-                        <FaInstagram size={14} />
-                      </a>
-                      <a
-                        href="#"
-                        className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white"
-                      >
-                        <FaYoutube size={14} />
-                      </a>
-                    </div>
-                  </span>
-                </div>
+
+                <span className="text-xs font-bold uppercase tracking-widest border border-[#2d2822] px-4 py-2 rounded-full flex items-center gap-2 mt-3">
+                  Follow Me
+                  <div className="flex items-center gap-2 ml-auto">
+                    <a href="#">
+                      <IoLogoFacebook size={24} />
+                    </a>
+                    <a href="#">
+                      <AiFillInstagram size={24} />
+                    </a>
+                    <a href="#">
+                      <FaYoutube size={24} />
+                    </a>
+                  </div>
+                </span>
               </div>
 
               <div className="flex flex-col gap-5">
@@ -148,10 +136,10 @@ export default function AboutPage() {
           </section>
         </div>
       </div>
-      <div className="mt-7">
+      <div className="mt-7 mx-auto px-6">
         <FeaturedRecipesSection title="Featured Recipes" />
       </div>
-      <div className="mt-7">
+      <div className="mt-7 mx-auto px-6">
         <JoinTheFunSection />
       </div>
       <div className="mt-7">

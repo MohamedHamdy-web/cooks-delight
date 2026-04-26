@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { useUser } from "@clerk/react";
 
 export default function JoinTheFunSection() {
+  const { isSignedIn } = useUser();
+
+  if (isSignedIn) return null;
+
   return (
     <section className="relative overflow-hidden rounded-4xl bg-[#EE6352] px-5 py-12 text-center text-white sm:px-8 sm:py-14 lg:px-10 lg:py-16">
       <div className="absolute -left-28 -top-28 h-72 w-72 rounded-full bg-[#EE6352] opacity-80 sm:-left-24 sm:-top-24 sm:h-80 sm:w-80 lg:h-96 lg:w-96" />

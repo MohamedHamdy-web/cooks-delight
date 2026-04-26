@@ -20,15 +20,15 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#f5efe8]">
       <Navbar />
-      <section className="max-w-6xl mx-auto py-13">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      <section className="w-full px-10 pt-6 pb-10">
+        <div className="grid md:grid-cols-2 items-center">
           <div>
             <h1 className="text-5xl md:text-7xl font-bold uppercase text-[#1e1b18] tracking-tight">
               Welcome to <br /> My Culinary <br /> Haven!
             </h1>
           </div>
           <div className="flex flex-col gap-6">
-            <p className="text-[#7a6d62] text-[21px] leading-tight">
+            <p className="text-[#7a6d62] text-[19px] leading-relaxed">
               Bonjour and welcome to the heart of my kitchen! I'm Isabella
               Russo, the culinary enthusiast behind this haven of flavors, Cooks
               Delight. Join me on a gastronomic journey where each dish carries
@@ -54,7 +54,7 @@ export default function AboutPage() {
                   <img
                     src={chefImage}
                     alt="Isabella Russo"
-                    className="w-full h-130 object-cover object-[center_30%] brightness-150"
+                    className="w-full h-130 object-cover object-[center_30%] brightness-150 hover:scale-105 transition duration-300"
                   />
                 </div>
 
@@ -105,7 +105,7 @@ export default function AboutPage() {
                 <p className="text-[#7a6d62] text-sm">Warmest regards,</p>
                 <p
                   className="text-[#2d2822] text-4xl italic"
-                  style={{ fontFamily: "'Dancing Script', cursive" }}
+                  style={{ fontFamily: "'Homemade Apple', cursive" }}
                 >
                   Isabella Russo
                 </p>
@@ -113,7 +113,7 @@ export default function AboutPage() {
             </div>
           </section>
           <section className="px-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {[
                 gallery1,
                 gallery2,

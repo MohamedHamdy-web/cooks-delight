@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { UserButton, useUser } from "@clerk/react";
 import { Menu, Search, X } from "lucide-react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/images/Logo.png";
 
 const navItems = [
@@ -13,6 +13,7 @@ const navItems = [
 
 export default function Navbar() {
   const { isSignedIn } = useUser();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,6 +40,14 @@ export default function Navbar() {
   const closeSearch = () => {
     setIsSearchOpen(false);
     setSearchQuery("");
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const q = searchQuery.trim();
+    if (!q) return;
+    closeSearch();
+    navigate(`/recipes?q=${encodeURIComponent(q)}`);
   };
 
   return (
@@ -81,7 +90,7 @@ export default function Navbar() {
 
             <div className="hidden items-center justify-end gap-2 lg:flex">
               {isSearchOpen ? (
-                <label className="flex h-11 w-55 items-center gap-3 rounded-full bg-[#f4eee8] px-4 text-[#6f5d50] xl:w-65">
+                <form onSubmit={handleSearch} className="flex h-11 w-55 items-center gap-3 rounded-full bg-[#f4eee8] px-4 text-[#6f5d50] xl:w-65">
                   <Search size={17} strokeWidth={2.25} />
                   <input
                     ref={searchInputRef}
@@ -91,7 +100,7 @@ export default function Navbar() {
                     placeholder="Search items..."
                     className="w-full border-none bg-transparent text-sm font-medium tracking-[0.08em] text-[#2d231b] outline-none placeholder:text-[#9d8f81]"
                   />
-                </label>
+                </form>
               ) : (
                 <>
                   <button
@@ -138,7 +147,7 @@ export default function Navbar() {
 
             {isSearchOpen ? (
               <div className="ml-auto flex flex-1 items-center gap-3 lg:hidden">
-                <label className="flex h-11 flex-1 items-center gap-3 rounded-full bg-[#f4eee8] px-4 text-[#6f5d50]">
+                <form onSubmit={handleSearch} className="flex h-11 flex-1 items-center gap-3 rounded-full bg-[#f4eee8] px-4 text-[#6f5d50]">
                   <Search size={17} strokeWidth={2.25} />
                   <input
                     ref={searchInputRef}
@@ -148,7 +157,7 @@ export default function Navbar() {
                     placeholder="Search items..."
                     className="w-full border-none bg-transparent text-sm font-medium tracking-[0.08em] text-[#2d231b] outline-none placeholder:text-[#9d8f81]"
                   />
-                </label>
+                </form>
 
                 <button
                   type="button"

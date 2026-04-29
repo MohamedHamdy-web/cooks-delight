@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { UserButton, useUser } from "@clerk/react";
 import { Menu, Search, X } from "lucide-react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import logo from "../assets/images/Logo.png";
 
 const navItems = [
@@ -14,9 +20,14 @@ const navItems = [
 export default function Navbar() {
   const { isSignedIn } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const isSearchPage = location.pathname === "/search";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(isSearchPage);
+  const [searchQuery, setSearchQuery] = useState(() =>
+    isSearchPage ? searchParams.get("q") || "" : "",
+  );
   const searchInputRef = useRef(null);
 
   useEffect(() => {
@@ -42,12 +53,37 @@ export default function Navbar() {
     setSearchQuery("");
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const q = searchQuery.trim();
-    if (!q) return;
-    closeSearch();
-    navigate(`/recipes?q=${encodeURIComponent(q)}`);
+  const updateSearchQuery = (value) => {
+    setSearchQuery(value);
+
+    const trimmedQuery = value.trim();
+    const navigationOptions = { replace: location.pathname === "/search" };
+
+    if (trimmedQuery) {
+      navigate(
+        `/search?q=${encodeURIComponent(trimmedQuery)}`,
+        navigationOptions,
+      );
+      return;
+    }
+
+    if (location.pathname === "/search") {
+      navigate("/search", navigationOptions);
+    }
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+
+    const trimmedQuery = searchQuery.trim();
+
+    if (!trimmedQuery) {
+      return;
+    }
+
+    setIsMenuOpen(false);
+    setIsSearchOpen(true);
+    navigate(`/search?q=${encodeURIComponent(trimmedQuery)}`);
   };
 
   return (
@@ -90,13 +126,16 @@ export default function Navbar() {
 
             <div className="hidden items-center justify-end gap-2 lg:flex">
               {isSearchOpen ? (
-                <form onSubmit={handleSearch} className="flex h-11 w-55 items-center gap-3 rounded-full bg-[#f4eee8] px-4 text-[#6f5d50] xl:w-65">
+                <form
+                  onSubmit={handleSearchSubmit}
+                  className="flex h-11 w-55 items-center gap-3 rounded-full bg-[#f4eee8] px-4 text-[#6f5d50] xl:w-65"
+                >
                   <Search size={17} strokeWidth={2.25} />
                   <input
                     ref={searchInputRef}
                     type="text"
                     value={searchQuery}
-                    onChange={(event) => setSearchQuery(event.target.value)}
+                    onChange={(event) => updateSearchQuery(event.target.value)}
                     placeholder="Search items..."
                     className="w-full border-none bg-transparent text-sm font-medium tracking-[0.08em] text-[#2d231b] outline-none placeholder:text-[#9d8f81]"
                   />
@@ -147,13 +186,16 @@ export default function Navbar() {
 
             {isSearchOpen ? (
               <div className="ml-auto flex flex-1 items-center gap-3 lg:hidden">
-                <form onSubmit={handleSearch} className="flex h-11 flex-1 items-center gap-3 rounded-full bg-[#f4eee8] px-4 text-[#6f5d50]">
+                <form
+                  onSubmit={handleSearchSubmit}
+                  className="flex h-11 flex-1 items-center gap-3 rounded-full bg-[#f4eee8] px-4 text-[#6f5d50]"
+                >
                   <Search size={17} strokeWidth={2.25} />
                   <input
                     ref={searchInputRef}
                     type="text"
                     value={searchQuery}
-                    onChange={(event) => setSearchQuery(event.target.value)}
+                    onChange={(event) => updateSearchQuery(event.target.value)}
                     placeholder="Search items..."
                     className="w-full border-none bg-transparent text-sm font-medium tracking-[0.08em] text-[#2d231b] outline-none placeholder:text-[#9d8f81]"
                   />

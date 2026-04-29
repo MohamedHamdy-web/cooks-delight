@@ -6,6 +6,7 @@ import Signup from "./pages/Signup/Signup";
 import Verify from "./pages/Verify/Verify";
 import RecipeDetails from "./pages/RecipeDetails/RecipeDetails";
 import AboutPage from "./pages/AboutUs/AboutUs";
+import SearchResults from "./pages/SearchResults/SearchResults";
 import CookingTips from "./pages/CookingTips/CookingTips";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/recipes/category/:categoryId" element={<Recipes />} />
         <Route path="/recipes/:id" element={<RecipeDetails />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify" element={<Verify />} />

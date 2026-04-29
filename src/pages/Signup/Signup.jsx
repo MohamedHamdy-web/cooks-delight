@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { SignUpButton } from "@clerk/react";
+import { useEffect, useState } from "react";
+import { SignUpButton, useUser } from "@clerk/react";
 import { useSignUp } from "@clerk/react/legacy";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
@@ -9,6 +9,7 @@ import logo from "../../assets/images/Logo.png";
 
 export default function Signup() {
   const { signUp, isLoaded } = useSignUp();
+  const { isSignedIn } = useUser();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [statusMsg, setStatusMsg] = useState("");
@@ -24,6 +25,12 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (isSignedIn) {
+      navigate("/", { replace: true });
+    }
+  }, [isSignedIn, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -233,7 +240,13 @@ export default function Signup() {
             </form>
 
             <div className="max-w-lg mx-auto w-full mt-4">
-              <SignUpButton mode="modal">
+              <SignUpButton
+                mode="modal"
+                forceRedirectUrl="/"
+                fallbackRedirectUrl="/"
+                signInForceRedirectUrl="/"
+                signInFallbackRedirectUrl="/"
+              >
                 <button
                   disabled={isSubmitting}
                   className="w-full border border-black py-4 rounded-3xl text-lg font-semibold hover:bg-gray-100 transition disabled:opacity-60"

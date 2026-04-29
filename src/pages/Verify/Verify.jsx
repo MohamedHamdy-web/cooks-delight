@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/react";
 import { useSignUp } from "@clerk/react/legacy";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -6,10 +7,17 @@ import logo from "../../assets/images/Logo.png";
 
 export default function Verify() {
   const { signUp, isLoaded, setActive } = useSignUp();
+  const { isSignedIn } = useUser();
   const navigate = useNavigate();
 
   const [code, setCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (isSignedIn) {
+      navigate("/", { replace: true });
+    }
+  }, [isSignedIn, navigate]);
 
   const handleVerify = async (e) => {
     e.preventDefault();
@@ -32,7 +40,7 @@ export default function Verify() {
           session: result.createdSessionId,
         });
 
-        navigate("/");
+        navigate("/", { replace: true });
         return;
       }
       setErrorMsg("Verification is not complete yet. Please try again.");

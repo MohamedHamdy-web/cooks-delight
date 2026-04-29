@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { SignInButton } from "@clerk/react";
+import { useEffect, useState } from "react";
+import { SignInButton, useUser } from "@clerk/react";
 import { useSignIn } from "@clerk/react/legacy";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react";
 import loginImg from "../../assets/images/login.jpg";
 import logo from "../../assets/images/Logo.png";
-import { Link } from "react-router-dom";
 
 export default function Login() {
   const { signIn, isLoaded, setActive } = useSignIn();
+  const { isSignedIn } = useUser();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -19,6 +19,12 @@ export default function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (isSignedIn) {
+      navigate("/", { replace: true });
+    }
+  }, [isSignedIn, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +45,7 @@ export default function Login() {
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
         toast.success("Welcome back 👋");
-        navigate("/");
+        navigate("/", { replace: true });
         return;
       }
       setErrorMsg("Login needs another verification step.");
@@ -130,7 +136,13 @@ export default function Login() {
             </form>
 
             <div className="max-w-lg mx-auto w-full mt-4">
-              <SignInButton mode="modal">
+              <SignInButton
+                mode="modal"
+                forceRedirectUrl="/"
+                fallbackRedirectUrl="/"
+                signUpForceRedirectUrl="/"
+                signUpFallbackRedirectUrl="/"
+              >
                 <button className="w-full border border-black py-4 rounded-3xl text-lg font-semibold hover:bg-gray-100 transition">
                   CONTINUE WITH EMAIL
                 </button>

@@ -165,24 +165,26 @@ export default function RecipesJourneySection() {
             {filteredRecipes.map((recipe) => (
               <article
                 key={recipe.id}
-                className="overflow-hidden rounded-[1.65rem] border border-[#ddd2c6] bg-[#fffdfa] shadow-[0_10px_22px_rgba(91,62,44,0.05)]"
+                className="flex h-full flex-col overflow-hidden rounded-[1.65rem] border border-[#ddd2c6] bg-[#fffdfa] shadow-[0_10px_22px_rgba(91,62,44,0.05)]"
               >
-                <img
-                  src={recipe.image}
-                  alt={recipe.name}
-                  className="h-52 w-full object-cover hover:scale-105 transition duration-300"
-                />
+                <div className="overflow-hidden">
+                  <img
+                    src={recipe.image}
+                    alt={recipe.name}
+                    className="h-52 w-full object-cover transition duration-300 hover:scale-105"
+                  />
+                </div>
 
-                <div className="px-4 py-4 sm:px-5">
+                <div className="flex flex-1 flex-col px-4 py-4 sm:px-5">
                   <h3 className="text-2xl font-extrabold tracking-[-0.03em] text-[#2e2822]">
                     {recipe.name}
                   </h3>
 
-                  <p className="mt-2 min-h-16 text-sm leading-6 text-[#7b6d60]">
+                  <p className="mt-2 text-sm leading-6 text-[#7b6d60]">
                     {formatRecipeSummary(recipe)}
                   </p>
 
-                  <div className="mt-5 flex flex-col gap-4 border-t border-[#ebe2d8] pt-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="mt-auto flex flex-col gap-4 border-t border-[#ebe2d8] pt-5 sm:flex-row sm:items-center sm:justify-between">
                     <span className="text-[10px] font-bold uppercase tracking-[0.11em] text-[#5c5148]">
                       {formatRecipeMeta(recipe)}
                     </span>

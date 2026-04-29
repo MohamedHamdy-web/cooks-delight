@@ -7,7 +7,6 @@ import {
 } from "../../helpers/recipeHelpers";
 import { getTotalRecipeMinutes } from "../../helpers/timeHelpers";
 import { getRecipeById } from "../../services/recipesService";
-import Navbar from "../../components/Navbar";
 import {
   FaConciergeBell,
   FaStopwatch,
@@ -78,7 +77,6 @@ export default function RecipeDetails() {
   return (
     <>
       <div className="min-h-screen bg-[#f5efe8]">
-        <Navbar />
         <main className="px-4 pb-6 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto px-6 py-12 border border-[#ddd2c6]  rounded-[1.65rem] mt-5">
             <div className="flex justify-center mb-4">

@@ -29,12 +29,19 @@ export default function Navbar() {
     isSearchPage ? searchParams.get("q") || "" : "",
   );
   const searchInputRef = useRef(null);
+  const searchNavigationTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (isSearchOpen) {
       searchInputRef.current?.focus();
     }
   }, [isSearchOpen]);
+
+  useEffect(() => {
+    return () => {
+      window.clearTimeout(searchNavigationTimeoutRef.current);
+    };
+  }, []);
 
   const navLinkClass = ({ isActive }) =>
     `relative pb-1 transition ${
@@ -55,20 +62,25 @@ export default function Navbar() {
 
   const updateSearchQuery = (value) => {
     setSearchQuery(value);
+    window.clearTimeout(searchNavigationTimeoutRef.current);
 
     const trimmedQuery = value.trim();
     const navigationOptions = { replace: location.pathname === "/search" };
 
     if (trimmedQuery) {
-      navigate(
-        `/search?q=${encodeURIComponent(trimmedQuery)}`,
-        navigationOptions,
-      );
+      searchNavigationTimeoutRef.current = window.setTimeout(() => {
+        navigate(
+          `/search?q=${encodeURIComponent(trimmedQuery)}`,
+          navigationOptions,
+        );
+      }, 180);
       return;
     }
 
     if (location.pathname === "/search") {
-      navigate("/search", navigationOptions);
+      searchNavigationTimeoutRef.current = window.setTimeout(() => {
+        navigate("/search", navigationOptions);
+      }, 180);
     }
   };
 
@@ -81,9 +93,12 @@ export default function Navbar() {
       return;
     }
 
+    window.clearTimeout(searchNavigationTimeoutRef.current);
     setIsMenuOpen(false);
     setIsSearchOpen(true);
-    navigate(`/search?q=${encodeURIComponent(trimmedQuery)}`);
+    navigate(`/search?q=${encodeURIComponent(trimmedQuery)}`, {
+      replace: location.pathname === "/search",
+    });
   };
 
   return (

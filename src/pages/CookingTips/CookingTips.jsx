@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Utensils } from "lucide-react";
 import Footer from "../../components/Footer";
-import JoinTheFunSection from "../../components/joinTheFunSection";
-import Navbar from "../../components/Navbar";
+import JoinTheFunSection from "../../components/JoinTheFunSection";
 import FeaturedRecipesSection from "../../components/FeaturedRecipesSection";
 import CookingTipsSection from "../../components/CookingTipsSection";
 import knifeSkillsImage from "../../assets/images/cooking-1.jpg";
@@ -160,8 +159,6 @@ const palateGuides = [
 export default function CookingTips() {
   return (
     <div className="min-h-screen bg-[#f5efe8] pb-12 text-[#2c241d]">
-      <Navbar />
-
       <main className="px-4 pb-6 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-7">
           <section className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.78fr)] lg:items-start">

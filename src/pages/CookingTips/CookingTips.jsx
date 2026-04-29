@@ -1,22 +1,24 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ChefHat,
-  ChevronLeft,
-  ChevronRight,
-  PencilRuler,
-  Utensils,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Utensils } from "lucide-react";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import FeaturedRecipesSection from "../../components/FeaturedRecipesSection";
-import { getAllRecipes } from "../../services/recipesService";
+import CookingTipsSection from "../../components/CookingTipsSection";
 import knifeSkillsImage from "../../assets/images/cooking-1.jpg";
 import sauteImage from "../../assets/images/cooking-2.jpg";
 import roastingImage from "../../assets/images/cooking-3.jpg";
 import prepImage from "../../assets/images/cooking-4.jpg";
 import cleaningImage from "../../assets/images/cooking-5.jpg";
 import recipeModImage from "../../assets/images/cooking-6.jpg";
+import breakfastImage from "../../assets/images/palate-1.jpg";
+import lunchImage from "../../assets/images/palate-2.jpg";
+import dinnerImage from "../../assets/images/palate-3.jpg";
+import Tip1 from "../../assets/images/tip-1.jpg";
+import Tip2 from "../../assets/images/tip-2.jpg";
+import Tip3 from "../../assets/images/tip-3.jpg";
+import Tip4 from "../../assets/images/tip-4.jpg";
+import Tip5 from "../../assets/images/tip-5.jpg";
+import Tip6 from "../../assets/images/tip-6.jpg";
 import { RiKnifeLine } from "react-icons/ri";
 import { GiKitchenScale } from "react-icons/gi";
 
@@ -42,42 +44,42 @@ const essentialTips = [
 
 const basicsTips = [
   {
-    title: "Knife Skills",
+    name: "Knife Skills",
     description:
       "Unlock the art of precision in your kitchen with proper chopping, dicing, and slicing techniques.Elevate your culinary creations to new heights.",
     meta: "15 MIN - 11 JUN 23",
     image: knifeSkillsImage,
   },
   {
-    title: "Sauteing and Searing",
+    name: "Sauteing and Searing",
     description:
       "Achieve the perfect sear and elevate flavors in your dishes. Learn the secrets to sautéing like a pro and creating irresistible textures.",
     meta: "10 MIN - 11 JUN 23",
     image: sauteImage,
   },
   {
-    title: "Roasting Tips",
+    name: "Roasting Tips",
     description:
       "Ensure even cooking and unlock flavorful results with our expert roasting tips. From golden vegetables to succulent meats, master the art of roasting.",
     meta: "25 MIN - 04 JAN 23",
     image: roastingImage,
   },
   {
-    title: "Prep Workstations",
+    name: "Prep Workstations",
     description:
       "Efficiently organize your kitchen space for chopping, mixing, and cooking. Elevate your efficiency in the heart of your culinary domain.",
     meta: "15 MIN - 11 JUN 23",
     image: prepImage,
   },
   {
-    title: "Cleaning as You Go",
+    name: "Cleaning as You Go",
     description:
       "Maintain a tidy kitchen for stress-free cooking. Learn the art of cleaning as you go, turning every culinary endeavor into a seamless experience.",
     meta: "10 MIN - 11 JUN 23",
     image: cleaningImage,
   },
   {
-    title: "Recipe Modification",
+    name: "Recipe Modification",
     description:
       "Feel confident modifying recipes to suit your taste. Explore the art of culinary creativity in crafting dishes uniquely your own.",
     meta: "25 MIN - 04 JAN 23",
@@ -85,42 +87,76 @@ const basicsTips = [
   },
 ];
 
+const flavorTips = [
+  {
+    name: "Fresh vs. Dried Herbs",
+    description:
+      "Discover the nuanced world of herbs. Learn when to opt for the freshness of herbs and when dried variants can amplify your culinary creations.",
+    meta: "15 MIN - 01 JUN 23",
+    image: Tip1,
+  },
+  {
+    name: "Choosing Produce",
+    description:
+      "Selecting ripe fruits and vegetables is an art. Explore our insights to ensure optimal taste in every dish.",
+    meta: "20 MIN - 01 JUN 23",
+    image: Tip2,
+  },
+  {
+    name: "Understanding Spices",
+    description:
+      "Enhance flavors by navigating the vast array of spices and seasonings. Uncover the secrets of creating dynamic taste profiles.",
+    meta: "25 MIN - 01 JUN 23",
+    image: Tip3,
+  },
+  {
+    name: "Balancing Sweet and Savory",
+    description:
+      "Achieve the perfect symphony of flavors by mastering the art of balancing sweet and savory elements in your dishes.",
+    meta: "15 MIN - 01 JUN 23",
+    image: Tip4,
+  },
+  {
+    name: "Too Salty? Too Sweet? Fixing Seasoning Issues",
+    description:
+      "Discover quick fixes for seasoning mishaps and ensure your dishes are perfectly balanced.",
+    meta: "20 MIN - 01 JUN 23",
+    image: Tip5,
+  },
+  {
+    name: "Storage Solutions",
+    description:
+      "Keep ingredients fresh and accessible with our storage solutions. Transform your kitchen into an organized oasis.",
+    meta: "25 MIN - 01 JUN 23",
+    image: Tip6,
+  },
+];
+
+const palateGuides = [
+  {
+    title: "Gluten-Free Alternatives",
+    description:
+      "Explore the world of gluten-free flours and grains, ensuring your dishes cater to a diverse range of dietary preferences.",
+    meta: "15 MIN - 01 JUN 23",
+    image: breakfastImage,
+  },
+  {
+    title: "Plant-Based Cooking",
+    description:
+      "Delight in the realm of plant-based cooking with tips for crafting delicious vegetarian and vegan dishes.",
+    meta: "15 MIN - 01 JUN 23",
+    image: lunchImage,
+  },
+  {
+    title: "Allergy-Friendly Substitutions",
+    description:
+      "Discover options for common allergens, ensuring everyone can savor the flavors of your culinary creations.",
+    meta: "15 MIN - 01 JUN 23",
+    image: dinnerImage,
+  },
+];
+
 export default function CookingTips() {
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let isActive = true;
-
-    async function loadRecipes() {
-      setLoading(true);
-      setError("");
-
-      try {
-        const data = await getAllRecipes();
-
-        if (isActive) {
-          setRecipes(Array.isArray(data) ? data.slice(0, 2) : []);
-        }
-      } catch (loadError) {
-        if (isActive) {
-          setError(loadError.message || "Unable to load recipes right now.");
-        }
-      } finally {
-        if (isActive) {
-          setLoading(false);
-        }
-      }
-    }
-
-    loadRecipes();
-
-    return () => {
-      isActive = false;
-    };
-  }, []);
-
   return (
     <div className="min-h-screen bg-[#f5efe8] pb-12 text-[#2c241d]">
       <Navbar />
@@ -174,58 +210,64 @@ export default function CookingTips() {
 
           <FeaturedRecipesSection title="Newest Recipes" />
 
-          <section>
-            <div className="mb-5 flex items-center justify-between gap-4">
-              <h2 className="text-2xl font-black uppercase tracking-[0.01em] text-[#2d2822] sm:text-3xl">
-                Mastering the Basics
+          <CookingTipsSection
+            sectionName="Mastering the Basics"
+            tips={basicsTips}
+          />
+
+          <section className="rounded-[1.65rem] bg-[#c5e3fb] px-5 py-6 sm:px-8 sm:py-8">
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <h2 className="text-[40px] font-bold uppercase tracking-[0.02em] text-[#2d2822] sm:text-3xl">
+                Nourishing Every Palate
               </h2>
 
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  aria-label="Previous cooking tips"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c7b9aa] text-[#7b6d60] transition hover:bg-white"
+                  aria-label="Previous palate tips"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-[#7aa5c5] text-[#577b96] transition hover:bg-white/45"
                 >
                   <ChevronLeft size={15} />
                 </button>
                 <button
                   type="button"
-                  aria-label="Next cooking tips"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-[#7b6d60] text-[#2f261f] transition hover:bg-white"
+                  aria-label="Next palate tips"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-[#3d6681] text-[#24313a] transition hover:bg-white/55"
                 >
                   <ChevronRight size={15} />
                 </button>
               </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {basicsTips.map((tip) => (
+            <div className="grid gap-4 md:grid-cols-3">
+              {palateGuides.map((guide) => (
                 <article
-                  key={tip.title}
-                  className="overflow-hidden rounded-[1.25rem] border border-[#ddd2c6] bg-[#fffdfa] shadow-[0_10px_22px_rgba(91,62,44,0.05)]"
+                  key={guide.title}
+                  className="group relative min-h-120 overflow-hidden rounded-[1.25rem]"
                 >
                   <img
-                    src={tip.image}
-                    alt={tip.title}
-                    className="h-55 w-full object-cover transition duration-300 hover:scale-105"
+                    src={guide.image}
+                    alt={guide.title}
+                    className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-110"
                   />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(31,29,26,0.1),rgba(31,29,26,0.78))]" />
 
-                  <div className="px-4 py-4">
-                    <h3 className="text-lg font-extrabold text-[#2e2822]">
-                      {tip.title}
+                  <div className="relative flex min-h-120 flex-col justify-end px-5 py-5 text-white">
+                    <h3 className="text-2xl font-extrabold leading-none tracking-[-0.02em]">
+                      {guide.title}
                     </h3>
-                    <p className="mt-2 min-h-16 text-sm leading-6 text-[#7b6d60]">
-                      {tip.description}
+                    <p className="mt-3 min-h-18 text-sm leading-6 text-white/82">
+                      {guide.description}
                     </p>
 
-                    <div className="mt-5 flex flex-col gap-4 border-t border-[#ebe2d8] pt-4 sm:flex-row sm:items-center sm:justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-[0.11em] text-[#5c5148]">
-                        {tip.meta}
+                    <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                      <span className="text-[10px] font-bold uppercase tracking-[0.11em] text-white/88">
+                        {guide.meta}
                       </span>
 
                       <Link
                         to="/recipes"
-                        className="inline-flex h-10 items-center justify-center rounded-full border border-[#8d7e70] px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#2e2822] transition hover:bg-[#f4ece3]"
+                        className="inline-flex h-10 items-center justify-center rounded-full border border-white/75 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-white transition hover:bg-white hover:text-[#2e2822]"
                       >
                         Read More
                       </Link>
@@ -235,6 +277,8 @@ export default function CookingTips() {
               ))}
             </div>
           </section>
+
+          <CookingTipsSection sectionName="Tips & Tricks" tips={flavorTips} />
         </div>
       </main>
 

@@ -33,7 +33,7 @@ export default function AboutChronicleSection() {
           <img
             src={aboutPanImage}
             alt="Seared salmon in a pan"
-            className="h-full w-full object-cover object-center"
+            className="h-full w-full object-cover object-center hover:scale-105 transition-transform duration-300"
           />
         </div>
 
@@ -41,7 +41,7 @@ export default function AboutChronicleSection() {
           <img
             src={aboutKitchenImage}
             alt="Chef plating dishes in the kitchen"
-            className="h-full w-full object-cover object-[59%_center]"
+            className="h-full w-full object-cover object-[59%_center] hover:scale-105 transition-transform duration-300"
           />
         </div>
 
@@ -49,7 +49,7 @@ export default function AboutChronicleSection() {
           <img
             src={aboutCookingImage}
             alt="Fresh vegetables cooking in a steaming pan"
-            className="h-full w-full object-cover object-[center_56%]"
+            className="h-full w-full object-cover object-[center_56%] hover:scale-105 transition-transform duration-300"
           />
         </div>
       </div>

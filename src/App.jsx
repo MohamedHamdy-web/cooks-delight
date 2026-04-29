@@ -6,6 +6,7 @@ import Signup from "./pages/Signup/Signup";
 import Verify from "./pages/Verify/Verify";
 import RecipeDetails from "./pages/RecipeDetails/RecipeDetails";
 import AboutPage from "./pages/AboutUs/AboutUs";
+import CookingTips from "./pages/CookingTips/CookingTips";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/about-us" element={<AboutPage />} />
+        <Route path="/cooking-tips" element={<CookingTips />} />
       </Routes>
     </BrowserRouter>
   );

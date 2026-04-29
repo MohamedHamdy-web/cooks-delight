@@ -3,7 +3,6 @@ import AboutChronicleSection from "../../components/AboutChronicleSection";
 import FeaturedRecipesSection from "../../components/FeaturedRecipesSection";
 import Footer from "../../components/Footer";
 import JoinTheFunSection from "../../components/JoinTheFunSection";
-import Navbar from "../../components/Navbar";
 import RecipesJourneySection from "../../components/RecipesJourneySection";
 import breakfastImage from "../../assets/images/breakfast.png";
 import dessertImage from "../../assets/images/dessert.png";
@@ -23,8 +22,6 @@ const paletteItems = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#f5efe8] pb-12 text-[#2c241d]">
-      <Navbar />
-
       <main className="px-4 pb-6 pt-4 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 lg:gap-6">
           <section className="relative overflow-hidden rounded-4xl sm:rounded-[2.5rem]">

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Outlet, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Recipes from "./pages/Recipes/Recipes";
@@ -8,21 +8,33 @@ import RecipeDetails from "./pages/RecipeDetails/RecipeDetails";
 import AboutPage from "./pages/AboutUs/AboutUs";
 import SearchResults from "./pages/SearchResults/SearchResults";
 import CookingTips from "./pages/CookingTips/CookingTips";
+import Navbar from "./components/Navbar";
+
+function PublicLayout() {
+  return (
+    <div className="min-h-screen bg-[#f5efe8] text-[#2c241d]">
+      <Navbar />
+      <Outlet />
+    </div>
+  );
+}
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/recipes/category/:categoryId" element={<Recipes />} />
-        <Route path="/recipes/:id" element={<RecipeDetails />} />
-        <Route path="/search" element={<SearchResults />} />
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/recipes" element={<Recipes />} />
+          <Route path="/recipes/category/:categoryId" element={<Recipes />} />
+          <Route path="/recipes/:id" element={<RecipeDetails />} />
+          <Route path="/search" element={<SearchResults />} />
+          <Route path="/about-us" element={<AboutPage />} />
+          <Route path="/cooking-tips" element={<CookingTips />} />
+        </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify" element={<Verify />} />
-        <Route path="/about-us" element={<AboutPage />} />
-        <Route path="/cooking-tips" element={<CookingTips />} />
       </Routes>
     </BrowserRouter>
   );

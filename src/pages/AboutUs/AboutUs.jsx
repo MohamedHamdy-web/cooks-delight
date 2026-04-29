@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar";
 import chefImage from "../../assets/images/aboutus-hero.jpg";
 import gallery1 from "../../assets/images/aboutus-section.jpg";
 import gallery2 from "../../assets/images/aboutus-2.jpg";
@@ -19,7 +18,6 @@ import { FaYoutube } from "react-icons/fa";
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#f5efe8]">
-      <Navbar />
       <section className="w-full px-10 pt-6 pb-10">
         <div className="grid md:grid-cols-2 items-center">
           <div>

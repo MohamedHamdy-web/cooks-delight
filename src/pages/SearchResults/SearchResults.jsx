@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import JoinTheFunSection from "../../components/JoinTheFunSection";
-import Navbar from "../../components/Navbar";
 import {
   getRecipeCountLabel,
   getRecipeMeta,
@@ -84,8 +83,6 @@ export default function SearchResults() {
 
   return (
     <div className="min-h-screen bg-[#f5efe8] pb-12 text-[#2c241d]">
-      <Navbar />
-
       <main className="px-4 pb-6 pt-8 sm:px-6 lg:px-8">
         <section className="mx-auto max-w-7xl">
           <div className="mb-5">

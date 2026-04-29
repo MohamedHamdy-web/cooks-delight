@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import JoinTheFunSection from "../../components/JoinTheFunSection";
-import Navbar from "../../components/Navbar";
 import {
   filterRecipesByMealType,
   getActiveCategory,
@@ -88,8 +87,6 @@ export default function Recipes() {
 
   return (
     <div className="min-h-screen bg-[#f5efe8] pb-12 text-[#2c241d]">
-      <Navbar />
-
       <main className="px-4 pb-6 pt-4 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 lg:gap-7">
           <section className="rounded-4xl bg-[#c5e3fb] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">

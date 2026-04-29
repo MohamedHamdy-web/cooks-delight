@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ChefHat, Users, Star, Share2 } from "lucide-react";
+import {
+  getRecipeRatingDisplay,
+  getRecipeTitleParts,
+} from "../../helpers/recipeHelpers";
+import { getTotalRecipeMinutes } from "../../helpers/timeHelpers";
 import { getRecipeById } from "../../services/recipesService";
 import Navbar from "../../components/Navbar";
 import {
@@ -28,7 +33,7 @@ export default function RecipeDetails() {
         setLoading(true);
         const data = await getRecipeById(id);
         setRecipe(data);
-      } catch (err) {
+      } catch {
         setError("Failed to load recipe.");
       } finally {
         setLoading(false);
@@ -67,8 +72,8 @@ export default function RecipeDetails() {
   }
 
   const rating = recipe.rating || 0;
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating - fullStars >= 0.5;
+  const { fullStars, hasHalfStar } = getRecipeRatingDisplay(rating);
+  const { firstLine, secondLine } = getRecipeTitleParts(recipe.name);
 
   return (
     <>
@@ -82,9 +87,9 @@ export default function RecipeDetails() {
               </span>
             </div>
             <h1 className="lg:text-[80px] md:text-6xl text-[38px] font-extrabold uppercase text-center text-[#262522] mb-4">
-              {recipe.name.split(" ").slice(0, 1).join(" ")}
+              {firstLine}
               <br />
-              {recipe.name.split(" ").slice(1).join(" ")}
+              {secondLine}
             </h1>
 
             <p className="text-center text-[#7a6d62] text-[21px]  md:text-base leading-relaxed max-w-xl mx-auto mb-6">
@@ -98,9 +103,7 @@ export default function RecipeDetails() {
               <div className="flex items-center gap-1.5">
                 <FaStopwatch size={20} />
                 <span>
-                  {(recipe.prepTimeMinutes || 0) +
-                    (recipe.cookTimeMinutes || 0)}{" "}
-                  MINUTES
+                  {getTotalRecipeMinutes(recipe)} MINUTES
                 </span>
               </div>
               <span className="text-[#2d2822]">•</span>

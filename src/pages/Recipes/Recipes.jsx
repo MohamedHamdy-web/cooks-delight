@@ -3,6 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import JoinTheFunSection from "../../components/JoinTheFunSection";
 import Navbar from "../../components/Navbar";
+import {
+  filterRecipesByMealType,
+  getActiveCategory,
+  getRecipeMeta,
+  getRecipeSummary,
+} from "../../helpers/recipeHelpers";
 import { getAllRecipes } from "../../services/recipesService";
 
 const recipeCategories = [
@@ -13,30 +19,6 @@ const recipeCategories = [
   { id: "dessert", label: "Dessert" },
   { id: "snack", label: "Snack" },
 ];
-
-function getRecipeSummary(recipe) {
-  const mealType = recipe.mealType?.[0]?.toLowerCase();
-  const cuisine = recipe.cuisine
-    ? `${recipe.cuisine.toLowerCase()} flavor`
-    : "";
-  const descriptor = [mealType, cuisine].filter(Boolean).join(" with ");
-
-  return `Discover ${recipe.name}${
-    descriptor ? `, a ${descriptor} favorite` : ""
-  } with simple steps and a table-ready finish.`;
-}
-
-function getRecipeMeta(recipe) {
-  const totalMinutes =
-    (recipe.prepTimeMinutes || 0) + (recipe.cookTimeMinutes || 0);
-  const timeLabel = `${totalMinutes || 30} MIN`;
-  const difficultyLabel = recipe.difficulty
-    ? `${recipe.difficulty.toUpperCase()} PREP`
-    : "EASY PREP";
-  const servingsLabel = `${recipe.servings || 2} SERVES`;
-
-  return `${timeLabel} - ${difficultyLabel} - ${servingsLabel}`;
-}
 
 function RecipeGridSkeleton() {
   return (
@@ -67,9 +49,7 @@ export default function Recipes() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const activeCategory =
-    recipeCategories.find((category) => category.id === categoryId) ||
-    recipeCategories[0];
+  const activeCategory = getActiveCategory(recipeCategories, categoryId);
 
   useEffect(() => {
     let isActive = true;
@@ -103,15 +83,7 @@ export default function Recipes() {
   }, []);
 
   const filteredRecipes = useMemo(() => {
-    if (activeCategory.id === "all") {
-      return recipes;
-    }
-
-    return recipes.filter((recipe) =>
-      recipe.mealType?.some(
-        (meal) => meal.toLowerCase() === activeCategory.id.toLowerCase(),
-      ),
-    );
+    return filterRecipesByMealType(recipes, activeCategory.id);
   }, [activeCategory.id, recipes]);
 
   return (

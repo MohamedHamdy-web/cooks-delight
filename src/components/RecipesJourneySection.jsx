@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  filterRecipesByMealType,
+  getRecipeMeta,
+  getRecipeSummary,
+  limitRecipes,
+} from "../helpers/recipeHelpers";
 import { getAllRecipes } from "../services/recipesService";
 
 const FILTERS = [
@@ -11,30 +17,6 @@ const FILTERS = [
   { id: "snack", label: "Snack" },
   { id: "side dish", label: "Side Dish" },
 ];
-
-function formatRecipeSummary(recipe) {
-  const mealType = recipe.mealType?.[0]?.toLowerCase();
-  const cuisine = recipe.cuisine
-    ? `${recipe.cuisine.toLowerCase()} flavor`
-    : null;
-  const descriptor = [mealType, cuisine].filter(Boolean).join(" with ");
-
-  return `Indulge in the rich and savory symphony of flavors with ${recipe.name}${
-    descriptor ? `, filled with ${descriptor}.` : "."
-  }`;
-}
-
-function formatRecipeMeta(recipe) {
-  const totalMinutes =
-    (recipe.prepTimeMinutes || 0) + (recipe.cookTimeMinutes || 0);
-  const timeLabel = `${totalMinutes || 20} MIN`;
-  const difficultyLabel = recipe.difficulty
-    ? `${recipe.difficulty.toUpperCase()} PREP`
-    : "EASY PREP";
-  const servingsLabel = `${recipe.servings || 2} SERVES`;
-
-  return `${timeLabel} - ${difficultyLabel} - ${servingsLabel}`;
-}
 
 function RecipeGridSkeleton() {
   return (
@@ -101,17 +83,7 @@ export default function RecipesJourneySection() {
   }, []);
 
   const filteredRecipes = useMemo(() => {
-    if (activeFilter === "all") {
-      return recipes.slice(0, 6);
-    }
-
-    return recipes
-      .filter((recipe) =>
-        recipe.mealType?.some(
-          (meal) => meal.toLowerCase() === activeFilter.toLowerCase(),
-        ),
-      )
-      .slice(0, 6);
+    return limitRecipes(filterRecipesByMealType(recipes, activeFilter), 6);
   }, [activeFilter, recipes]);
 
   return (
@@ -181,12 +153,12 @@ export default function RecipesJourneySection() {
                   </h3>
 
                   <p className="mt-2 text-sm leading-6 text-[#7b6d60]">
-                    {formatRecipeSummary(recipe)}
+                    {getRecipeSummary(recipe, "journey")}
                   </p>
 
                   <div className="mt-auto flex flex-col gap-4 border-t border-[#ebe2d8] pt-5 sm:flex-row sm:items-center sm:justify-between">
                     <span className="text-[10px] font-bold uppercase tracking-[0.11em] text-[#5c5148]">
-                      {formatRecipeMeta(recipe)}
+                      {getRecipeMeta(recipe, { fallbackMinutes: 20 })}
                     </span>
 
                     <Link

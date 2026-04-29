@@ -87,7 +87,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="px-4 pt-5 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 px-4 pt-5 pb-3 backdrop-blur-sm sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="rounded-[999px] border border-[#e8ddd1] bg-white px-4 py-3 shadow-[0_12px_30px_rgba(91,62,44,0.08)] sm:px-6">
           <div className="flex items-center gap-4">

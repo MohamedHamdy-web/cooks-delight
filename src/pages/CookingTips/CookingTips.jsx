@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Utensils } from "lucide-react";
 import Footer from "../../components/Footer";
+import JoinTheFunSection from "../../components/joinTheFunSection";
 import Navbar from "../../components/Navbar";
 import FeaturedRecipesSection from "../../components/FeaturedRecipesSection";
 import CookingTipsSection from "../../components/CookingTipsSection";
@@ -279,9 +280,9 @@ export default function CookingTips() {
           </section>
 
           <CookingTipsSection sectionName="Tips & Tricks" tips={flavorTips} />
+          <JoinTheFunSection />
         </div>
       </main>
-
       <Footer />
     </div>
   );

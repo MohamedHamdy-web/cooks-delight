@@ -53,6 +53,25 @@ export default function Navbar() {
     setSearchQuery("");
   };
 
+  const updateSearchQuery = (value) => {
+    setSearchQuery(value);
+
+    const trimmedQuery = value.trim();
+    const navigationOptions = { replace: location.pathname === "/search" };
+
+    if (trimmedQuery) {
+      navigate(
+        `/search?q=${encodeURIComponent(trimmedQuery)}`,
+        navigationOptions,
+      );
+      return;
+    }
+
+    if (location.pathname === "/search") {
+      navigate("/search", navigationOptions);
+    }
+  };
+
   const handleSearchSubmit = (event) => {
     event.preventDefault();
 
@@ -116,7 +135,7 @@ export default function Navbar() {
                     ref={searchInputRef}
                     type="text"
                     value={searchQuery}
-                    onChange={(event) => setSearchQuery(event.target.value)}
+                    onChange={(event) => updateSearchQuery(event.target.value)}
                     placeholder="Search items..."
                     className="w-full border-none bg-transparent text-sm font-medium tracking-[0.08em] text-[#2d231b] outline-none placeholder:text-[#9d8f81]"
                   />
@@ -176,7 +195,7 @@ export default function Navbar() {
                     ref={searchInputRef}
                     type="text"
                     value={searchQuery}
-                    onChange={(event) => setSearchQuery(event.target.value)}
+                    onChange={(event) => updateSearchQuery(event.target.value)}
                     placeholder="Search items..."
                     className="w-full border-none bg-transparent text-sm font-medium tracking-[0.08em] text-[#2d231b] outline-none placeholder:text-[#9d8f81]"
                   />

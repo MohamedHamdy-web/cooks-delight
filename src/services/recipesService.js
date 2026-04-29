@@ -34,3 +34,15 @@ export async function getAllRecipes() {
 
   return Array.isArray(data.recipes) ? data.recipes : [];
 }
+
+export async function searchRecipes(query) {
+  const data = await requestRecipes("/search", { q: query, limit: 0 });
+
+  return Array.isArray(data.recipes) ? data.recipes : [];
+}
+
+export async function getRecipesByMealType(mealType) {
+  const data = await requestRecipes(`/meal-type/${encodeURIComponent(mealType)}`, { limit: 0 });
+
+  return Array.isArray(data.recipes) ? data.recipes : [];
+}

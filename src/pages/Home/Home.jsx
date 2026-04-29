@@ -107,7 +107,7 @@ export default function Home() {
                   return (
                     <Link
                       key={item.id}
-                      to={`/recipes/category/${item.id}`}
+                      to={`/recipes?category=${item.id}`}
                       className="flex items-center justify-between gap-4 border-b border-[#a9cbe7] py-4 pl-2 text-[#24313a] transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2f3b44]/35 sm:gap-6 sm:py-5 sm:pl-3"
                     >
                       <div className="flex min-w-0 items-center">

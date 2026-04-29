@@ -16,7 +16,9 @@ const recipeCategories = [
 
 function getRecipeSummary(recipe) {
   const mealType = recipe.mealType?.[0]?.toLowerCase();
-  const cuisine = recipe.cuisine ? `${recipe.cuisine.toLowerCase()} flavor` : "";
+  const cuisine = recipe.cuisine
+    ? `${recipe.cuisine.toLowerCase()} flavor`
+    : "";
   const descriptor = [mealType, cuisine].filter(Boolean).join(" with ");
 
   return `Discover ${recipe.name}${
@@ -183,9 +185,7 @@ export default function Recipes() {
                 <p className="text-lg font-semibold text-[#342a22]">
                   We could not load recipes.
                 </p>
-                <p className="mt-2 text-sm leading-6 text-[#7a6d62]">
-                  {error}
-                </p>
+                <p className="mt-2 text-sm leading-6 text-[#7a6d62]">{error}</p>
               </div>
             ) : null}
 

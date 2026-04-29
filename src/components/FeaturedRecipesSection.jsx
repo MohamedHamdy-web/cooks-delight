@@ -1,35 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import {
+  getRecipeMeta,
+  getRecipePage,
+  getRecipePageCount,
+  getRecipeSummary,
+} from "../helpers/recipeHelpers";
 import { getAllRecipes } from "../services/recipesService";
 
 const ITEMS_PER_VIEW = 2;
-
-function formatRecipeSummary(recipe) {
-  const cuisine = recipe.cuisine
-    ? `${recipe.cuisine.toLowerCase()} cuisine`
-    : null;
-  const mealType = recipe.mealType?.[0]?.toLowerCase();
-  const difficulty = recipe.difficulty?.toLowerCase();
-
-  const fallback = [mealType, cuisine].filter(Boolean).join(" with ");
-
-  return `Enjoy ${recipe.name} with ${
-    fallback || "a rich homemade flavor"
-  } crafted for ${difficulty || "everyday"} cooking.`;
-}
-
-function formatRecipeMeta(recipe) {
-  const totalMinutes =
-    (recipe.prepTimeMinutes || 0) + (recipe.cookTimeMinutes || 0);
-  const timeLabel = `${totalMinutes || recipe.prepTimeMinutes || 30} MIN`;
-  const difficultyLabel = recipe.difficulty
-    ? `${recipe.difficulty.toUpperCase()} PREP`
-    : "QUICK PREP";
-  const servingsLabel = `${recipe.servings || 2} SERVES`;
-
-  return `${timeLabel} - ${difficultyLabel} - ${servingsLabel}`;
-}
 
 function RecipeCardSkeleton() {
   return (
@@ -89,13 +69,11 @@ export default function FeaturedRecipesSection({ title }) {
   }, []);
 
   const totalPages = useMemo(() => {
-    return Math.max(1, Math.ceil(recipes.length / ITEMS_PER_VIEW));
+    return getRecipePageCount(recipes.length, ITEMS_PER_VIEW);
   }, [recipes.length]);
 
   const visibleRecipes = useMemo(() => {
-    const startIndex = page * ITEMS_PER_VIEW;
-
-    return recipes.slice(startIndex, startIndex + ITEMS_PER_VIEW);
+    return getRecipePage(recipes, page, ITEMS_PER_VIEW);
   }, [page, recipes]);
 
   useEffect(() => {
@@ -175,12 +153,15 @@ export default function FeaturedRecipesSection({ title }) {
                 </h3>
 
                 <p className="mt-2 min-h-14 text-sm leading-6 text-[#7b6d60]">
-                  {formatRecipeSummary(recipe)}
+                  {getRecipeSummary(recipe, "featured")}
                 </p>
 
                 <div className="mt-5 flex flex-col gap-4 border-t border-[#ebe2d8] pt-4 sm:flex-row sm:items-center sm:justify-between">
                   <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#5c5148] sm:text-[11px]">
-                    {formatRecipeMeta(recipe)}
+                    {getRecipeMeta(recipe, {
+                      fallbackDifficulty: "QUICK PREP",
+                      preferPrepTime: true,
+                    })}
                   </span>
 
                   <Link

@@ -3,46 +3,13 @@ import { Link, useSearchParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import JoinTheFunSection from "../../components/JoinTheFunSection";
 import Navbar from "../../components/Navbar";
+import {
+  getRecipeCountLabel,
+  getRecipeMeta,
+  getRecipeSummary,
+  recipeMatchesQuery,
+} from "../../helpers/recipeHelpers";
 import { getAllRecipes } from "../../services/recipesService";
-
-function getRecipeSummary(recipe) {
-  const cuisine = recipe.cuisine
-    ? `${recipe.cuisine.toLowerCase()} flavor`
-    : "";
-  const mealType = recipe.mealType?.[0]?.toLowerCase();
-  const tags = recipe.tags?.slice(0, 2).join(", ").toLowerCase();
-  const detail = [mealType, cuisine, tags].filter(Boolean).join(" with ");
-
-  return `A tasty ${detail || "kitchen"} favorite with simple steps and a table-ready finish.`;
-}
-
-function getRecipeMeta(recipe) {
-  const totalMinutes =
-    (recipe.prepTimeMinutes || 0) + (recipe.cookTimeMinutes || 0);
-  const timeLabel = `${totalMinutes || 30} MIN`;
-  const difficultyLabel = recipe.difficulty
-    ? `${recipe.difficulty.toUpperCase()} PREP`
-    : "EASY PREP";
-  const servingsLabel = `${recipe.servings || 2} SERVES`;
-
-  return `${timeLabel} - ${difficultyLabel} - ${servingsLabel}`;
-}
-
-function recipeMatchesQuery(recipe, query) {
-  const searchableText = [
-    recipe.name,
-    recipe.cuisine,
-    recipe.difficulty,
-    ...(recipe.mealType || []),
-    ...(recipe.tags || []),
-    ...(recipe.ingredients || []),
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
-
-  return searchableText.includes(query.toLowerCase());
-}
 
 function RecipeGridSkeleton() {
   return (
@@ -113,10 +80,7 @@ export default function SearchResults() {
     return recipes.filter((recipe) => recipeMatchesQuery(recipe, query));
   }, [query, recipes]);
 
-  const resultCountLabel =
-    filteredRecipes.length === 1
-      ? "1 recipe found"
-      : `${filteredRecipes.length} recipes found`;
+  const resultCountLabel = getRecipeCountLabel(filteredRecipes.length);
 
   return (
     <div className="min-h-screen bg-[#f5efe8] pb-12 text-[#2c241d]">
@@ -187,7 +151,7 @@ export default function SearchResults() {
                     </h2>
 
                     <p className="mt-2 min-h-14 text-sm leading-6 text-[#7b6d60]">
-                      {getRecipeSummary(recipe)}
+                      {getRecipeSummary(recipe, "search")}
                     </p>
 
                     <div className="mt-5 flex flex-col gap-4 border-t border-[#ebe2d8] pt-4 sm:flex-row sm:items-center sm:justify-between">
